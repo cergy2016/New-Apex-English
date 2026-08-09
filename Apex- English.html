@@ -1,0 +1,1138 @@
+<!DOCTYPE html>
+<html lang="en" class="">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apex English - App Preview</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        navy: { DEFAULT: '#0B1F33', dark: '#081726', light: '#0F253D' },
+                        ivory: '#FCFBF7',
+                        gold: { DEFAULT: '#C5A572', dark: '#A88B5C' },
+                        charcoal: '#1C333A',
+                        softgray: '#F4F4F5'
+                    },
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'serif'],
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'premium': '0px 10px 30px -15px rgba(11, 31, 51, 0.15)'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #FCFBF7; font-family: 'Inter', sans-serif; color: #0B1F33; }
+        .dark body { background-color: #0B1F33; color: #FCFBF7; }
+        .font-serif { font-family: 'Playfair Display', serif; }
+        
+        .perspective-1000 { perspective: 1000px; }
+        .preserve-3d { transform-style: preserve-3d; transition: transform 0.6s; }
+        .backface-hidden { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+        .rotate-y-180 { transform: rotateY(180deg); }
+        
+        .audio-playing svg { color: #C5A572 !important; }
+        .view { display: none; }
+        .view.active { display: block; }
+        
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #C5A572; border-radius: 4px; }
+    </style>
+</head>
+<body class="antialiased pb-24 md:pb-0 transition-colors duration-300">
+
+    <nav class="sticky top-0 z-50 w-full border-b border-gray-200/50 dark:border-navy-light/50 bg-ivory/80 dark:bg-navy/80 backdrop-blur-lg transition-colors duration-300">
+        <div class="max-w-6xl mx-auto px-6 md:px-12 h-16 flex items-center justify-between">
+            <span class="font-serif text-2xl font-bold tracking-tight text-navy dark:text-ivory">Apex English</span>
+            <div class="hidden md:flex items-center space-x-8 text-sm font-medium">
+                <button data-nav="dashboard" class="flex items-center gap-2 text-navy/70 dark:text-ivory/70 hover:text-gold transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg> Dashboard
+                </button>
+                <button data-nav="glossary" class="flex items-center gap-2 text-navy/70 dark:text-ivory/70 hover:text-gold transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 6 4 14"/><path d="M12 6v14"/><path d="M8 8v12"/><path d="M4 4v16"/></svg> Glossary
+                </button>
+                <button id="theme-toggle" class="p-2 rounded-full text-navy/70 dark:text-ivory/70 hover:text-gold transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="dark:hidden"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden dark:block"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <nav class="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-ivory dark:bg-navy border-t border-gray-200 dark:border-navy-light flex justify-around py-2 transition-colors duration-300">
+        <button data-nav="dashboard" class="p-3 text-navy dark:text-ivory hover:text-gold rounded-full">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>
+        </button>
+        <button data-nav="glossary" class="p-3 text-navy dark:text-ivory hover:text-gold rounded-full">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 6 4 14"/><path d="M12 6v14"/><path d="M8 8v12"/><path d="M4 4v16"/></svg>
+        </button>
+        <button id="theme-toggle-mobile" class="p-3 text-navy dark:text-ivory hover:text-gold rounded-full">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="dark:hidden"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden dark:block"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+        </button>
+    </nav>
+
+    <div class="max-w-6xl mx-auto px-6 md:px-12 py-12">
+
+        <!-- DASHBOARD -->
+        <div id="dashboard-view" class="view active">
+            <h1 class="font-serif text-4xl font-bold mb-12 text-navy dark:text-ivory">Your Progress</h1>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+                <div class="bg-white dark:bg-navy-light p-8 rounded-2xl shadow-premium border border-gray-100 dark:border-navy/50">
+                    <div class="w-12 h-12 rounded-full bg-softgray dark:bg-charcoal flex items-center justify-center text-gold mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>
+                    </div>
+                    <p class="text-sm text-navy/50 dark:text-ivory/50 uppercase tracking-wider">Completed</p>
+                    <p class="text-3xl font-serif font-bold text-navy dark:text-ivory" id="completed-count">0 / 15</p>
+                </div>
+                <div class="bg-white dark:bg-navy-light p-8 rounded-2xl shadow-premium border border-gray-100 dark:border-navy/50">
+                    <div class="w-12 h-12 rounded-full bg-softgray dark:bg-charcoal flex items-center justify-center text-gold mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+                    </div>
+                    <p class="text-sm text-navy/50 dark:text-ivory/50 uppercase tracking-wider">Completion Rate</p>
+                    <p class="text-3xl font-serif font-bold text-navy dark:text-ivory" id="completion-rate">0%</p>
+                </div>
+                <div class="bg-white dark:bg-navy-light p-8 rounded-2xl shadow-premium border border-gray-100 dark:border-navy/50">
+                    <div class="w-12 h-12 rounded-full bg-softgray dark:bg-charcoal flex items-center justify-center text-gold mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"/></svg>
+                    </div>
+                    <p class="text-sm text-navy/50 dark:text-ivory/50 uppercase tracking-wider">Bookmarks</p>
+                    <p class="text-3xl font-serif font-bold text-navy dark:text-ivory" id="bookmark-count">0 Items</p>
+                </div>
+            </div>
+            <div class="bg-white dark:bg-navy-light p-8 rounded-2xl shadow-premium border border-gray-100 dark:border-navy/50">
+                <h2 class="font-serif text-2xl font-bold mb-6 text-navy dark:text-ivory">Course Map</h2>
+                <div class="space-y-4" id="course-map"></div>
+            </div>
+        </div>
+
+        <!-- LESSON -->
+        <div id="lesson-view" class="view">
+            <div id="lesson-content"></div>
+        </div>
+
+        <!-- GLOSSARY -->
+        <div id="glossary-view" class="view">
+            <div class="mb-12 max-w-3xl">
+                <span class="text-sm font-semibold uppercase tracking-wider text-gold">Reference</span>
+                <h1 class="font-serif text-4xl md:text-5xl font-bold mt-3 mb-4 text-navy dark:text-ivory">Business English Glossary</h1>
+                <p class="text-navy/60 dark:text-ivory/60 text-lg font-light">A complete alphabetical list of terms and definitions from all 15 units.</p>
+            </div>
+            
+            <div class="bg-white dark:bg-navy-light rounded-2xl shadow-premium p-2 border border-gray-100 dark:border-navy/50 overflow-hidden mb-12">
+                <img src="https://z-cdn-media.chatglm.cn/files/fdb26c1d-df3e-4a90-a2a9-6ff3de032590.png?auth_key=1886231506-5c89b6b83f3846129ffa9b5bedcd9fcd-0-cba75ffd42ca861710242abcce5c7c55" alt="Glossary Interface" class="w-full h-auto object-cover rounded-xl max-h-96">
+            </div>
+
+            <div class="relative mb-12 max-w-lg">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute left-4 top-1/2 -translate-y-1/2 text-navy/40 dark:text-ivory/40"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                <input type="text" placeholder="Search for a term or definition..." id="glossary-search" class="w-full pl-12 pr-4 py-3 bg-white dark:bg-navy-light border border-gray-200 dark:border-navy/50 rounded-full text-navy dark:text-ivory placeholder:text-navy/40 focus:outline-none focus:ring-2 focus:ring-gold/50 transition-all">
+            </div>
+            <div id="glossary-list" class="space-y-8"></div>
+        </div>
+
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const safeStorage = {
+            getItem(key) { try { return localStorage.getItem(key); } catch(e) { return null; } },
+            setItem(key, value) { try { localStorage.setItem(key, value); } catch(e) {} }
+        };
+
+        // --- PREMIUM SVG ICONS FOR EACH UNIT ---
+        const unitIcons = {
+            "product-details": `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><path d="M12 18h.01"/></svg>`,
+            "selling-products": `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>`,
+            "product-problems": `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" x2="12" y1="9" y2="13"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg>`,
+            "telephoning": `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>`,
+            "emails": `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>`,
+            "letters": `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 9H8"/></svg>`,
+            "faxes": `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect width="12" height="8" x="6" y="14"/></svg>`,
+            "types-of-meetings": `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`,
+            "meeting-etiquette": `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m11 17 2 2a1 1 0 1 0 3-3"/><path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4"/><path d="m21 3 1 11h-2"/><path d="M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3"/><path d="M3 4h8"/></svg>`,
+            "presentations": `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3v3a1 1 0 0 0 1 1h18a1 1 0 0 0 1-1V3"/><path d="M2 3h20"/><path d="M22 3v3"/><path d="M4 6v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6"/></svg>`,
+            "time-management": `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>`,
+            "negotiations": `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg>`,
+            "customer-service": `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H4a1 1 0 0 1-1-1v-5a9 9 0 0 1 18 0v5a1 1 0 0 1-1 1h-2a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3"/></svg>`,
+            "travel-arrangements": `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></svg>`,
+            "travel-necessities": `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 19v-3"/><path d="M6 11v-2"/><path d="M6 6V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2v-1"/><path d="M14 3v4"/><path d="M10 3v4"/><path d="M9 19h6"/></svg>`
+        };
+
+        const courseLessons = {
+            // --- UNIT 1: PRODUCT DETAILS ---
+            "product-details": { 
+                title: "Product Details", 
+                description: "Describe product features and update press releases for new launches.", 
+                level: "Intermediate", 
+                minutes: 25,
+                imageUrl: "https://z-cdn-media.chatglm.cn/files/17388959-beb4-43a3-9bd9-8933e24638f4.png?auth_key=1886232383-0d004f092e294f29baa67619112d0302-0-9bdcc25aa182eb4e57abe066163861c5",
+                reading: `<p>Two years ago, Omega launched the Omega Star phone. It was a revolutionary device at the time, offering reliable performance at an affordable price. Now, our designers have developed an even better phone. We are pleased to announce the arrival of the Galaxy.</p>
+                <p>The Galaxy is manufactured solely for TeleCom Wireless customers. Omega is proud to partner with the nation's leading mobile service provider. This strategic alliance ensures that the Galaxy reaches the widest possible audience while maintaining exclusive availability.</p>
+                <p>The Galaxy comes with all the amazing features that the Star does. But it has a longer battery life and brighter display screen. It has been assembled to Omega's strict quality standards. Benefits of the Galaxy include a more user-friendly touch screen and higher speed Internet capabilities. The enhanced processor allows for seamless multitasking and high-definition video streaming.</p>
+                <p>For customers who prefer a simpler phone, the Star will remain available for purchase at a reduced price point. However, we highly recommend upgrading to the Galaxy to take full advantage of the latest mobile technology.</p>
+                <p>The Galaxy will be shipped from our factories this week. Then, they will be distributed by TeleCom Wireless to their stores across the country. The phone will be available for purchase in TeleCom stores on May 13. A national advertising campaign will launch simultaneously to support the retail release.</p>`,
+                readingAudioText: "Two years ago, Omega launched the Omega Star phone. It was a revolutionary device at the time, offering reliable performance at an affordable price. Now, our designers have developed an even better phone. We are pleased to announce the arrival of the Galaxy. The Galaxy is manufactured solely for TeleCom Wireless customers. Omega is proud to partner with the nation's leading mobile service provider. This strategic alliance ensures that the Galaxy reaches the widest possible audience while maintaining exclusive availability. The Galaxy comes with all the amazing features that the Star does. But it has a longer battery life and brighter display screen. It has been assembled to Omega's strict quality standards. Benefits of the Galaxy include a more user-friendly touch screen and higher speed Internet capabilities. The enhanced processor allows for seamless multitasking and high-definition video streaming. For customers who prefer a simpler phone, the Star will remain available for purchase at a reduced price point. However, we highly recommend upgrading to the Galaxy to take full advantage of the latest mobile technology. The Galaxy will be shipped from our factories this week. Then, they will be distributed by TeleCom Wireless to their stores across the country. The phone will be available for purchase in TeleCom stores on May 13. A national advertising campaign will launch simultaneously to support the retail release.",
+                vocabulary: [ 
+                    { term: "Customized", phonetic: "/ˈkʌstəmaɪzd/", def: "Modified or adapted for a particular purpose or customer.", ex: "The Galaxy is customized for TeleCom Wireless customers." }, 
+                    { term: "Distribute", phonetic: "/ˈdɪstrɪbjuːt/", def: "To supply goods to retailers or users.", ex: "TeleCom will distribute the new phones this week." }, 
+                    { term: "Battery life", phonetic: "/ˈbætəri laɪf/", def: "The length of time a device can operate before needing a recharge.", ex: "The new model comes with a longer battery life." }, 
+                    { term: "Available", phonetic: "/əˈveɪləbəl/", def: "Ready for use or purchase.", ex: "The phone will be available in stores on May 13." }, 
+                    { term: "Press release", phonetic: "/prɛs rɪˈliːs/", def: "An official statement sent to the media to share news.", ex: "The marketing team is updating the press release." }, 
+                    { term: "Launch", phonetic: "/lɔːntʃ/", def: "To introduce a new product or service to the market.", ex: "Omega Electronics comes out with the NEW Galaxy launch this week." } 
+                ], 
+                phrases: [ 
+                    { phrase: "Comes out with...", context: "Introducing a new product to the market." }, 
+                    { phrase: "Designed specifically for...", context: "Mentioning the target customer." }, 
+                    { phrase: "It features a longer battery life.", context: "Highlighting a key product benefit." }, 
+                    { phrase: "Will be distributed by...", context: "Explaining the supply chain." }, 
+                    { phrase: "Available in stores on...", context: "Giving the retail release date." }, 
+                    { phrase: "Let's review the press release.", context: "Transitioning to a document editing task." } 
+                ], 
+                dialogue: [ 
+                    { speaker: "A", name: "Sarah", text: "Hi Bob, did you finish updating the press release for the new Galaxy phone?" }, 
+                    { speaker: "B", name: "Bob", text: "Yes, Sarah. I included the details about the TeleCom Wireless partnership and the exclusive distribution deal." }, 
+                    { speaker: "A", name: "Sarah", text: "Great. Did you mention the longer battery life and brighter display?" }, 
+                    { speaker: "B", name: "Bob", text: "Yes, it highlights that it is designed specifically for their customers. I also added a section about the enhanced processor and the high-speed Internet capabilities." }, 
+                    { speaker: "A", name: "Sarah", text: "Perfect. What about the shipping date? We need to be clear about when the phone will be in stores." }, 
+                    { speaker: "B", name: "Bob", text: "It says they come out this week from the factory, and TeleCom will distribute them." }, 
+                    { speaker: "A", name: "Sarah", text: "And it will be available for purchase in TeleCom stores on May 13?" }, 
+                    { speaker: "B", name: "Bob", text: "Exactly. I also noted that the Omega Star will remain available at a reduced price for customers who prefer a simpler phone." }, 
+                    { speaker: "A", name: "Sarah", text: "Excellent work. Let's send it to the media outlets right away." }, 
+                    { speaker: "B", name: "Bob", text: "I'll email it to our press contacts and post it on the website immediately." } 
+                ], 
+                grammarTip: { title: "Using Comparatives for Features", explanation: "When writing a press release, use comparative adjectives to show improvements over previous models. This makes the new product sound more appealing.", example: "The NEW Galaxy features a BRIGHTER display and a LONGER battery life compared to the old model." }, 
+                quiz: [ 
+                    { q: "According to the press release, who is the Galaxy phone customized for?", opts: ["Omega Electronics", "TeleCom Wireless customers", "Retail store employees", "The marketing team"], correct: 1, exp: "The text states: The Galaxy is customized for TeleCom Wireless customers." }, 
+                    { q: "What are the main advantages of the new Galaxy phone?", opts: ["Lower price and faster shipping", "Longer battery life, brighter display, and faster internet", "Free accessories and custom software", "Lighter weight and smaller size"], correct: 1, exp: "The text mentions a longer battery life, a brighter display, and faster internet speeds." }, 
+                    { q: "When will the phone be available in stores?", opts: ["This week", "May 13", "Next month", "Today"], correct: 1, exp: "Bob says: It will be available in stores on May 13." }, 
+                    { q: "What are Sarah and Bob discussing in the dialogue?", opts: ["The price of the new phone", "Changes to the press release", "The shipping delay", "The store layout"], correct: 1, exp: "Sarah starts by asking: Did you finish updating the press release?" } 
+                ] 
+            },
+            // --- UNIT 2: SELLING PRODUCTS ---
+            "selling-products": { 
+                title: "Selling Products", 
+                description: "Present benefits, explain specials, and respond to customer needs.", 
+                level: "Intermediate", 
+                minutes: 25,
+                imageUrl: "https://z-cdn-media.chatglm.cn/files/8ca248a2-106a-4c2b-9193-1b1e0465ce3d.png?auth_key=1886232383-05c69bce3b2f484697956d2565d88df7-0-eb628b020121f523500953f65200f0ce",
+                reading: `<p>Sneakers DiRect offers today's online specials. We are the premier destination for athletic footwear, offering a wide selection of running shoes, basketball sneakers, and casual trainers. Our inventory includes top brands and exclusive models you won't find anywhere else.</p>
+                <p>We sell running shoes at the wholesale price. By cutting out the middleman, we pass the savings directly to you. Our prices are guaranteed! If you find a lower price on any item within 30 days, we will refund the difference.</p>
+                <p>We offer free shipping on all orders over $75.00. Most orders are processed within 24 hours and arrive at your door in 3-5 business days. You can also order via our mail order catalog if you prefer to shop offline.</p>
+                <p>Our customer service team is available 24/7 to help you find the perfect fit. Check our website for today's online specials before they sell out!</p>`,
+                readingAudioText: "Sneakers DiRect offers today's online specials. We are the premier destination for athletic footwear, offering a wide selection of running shoes, basketball sneakers, and casual trainers. Our inventory includes top brands and exclusive models you won't find anywhere else. We sell running shoes at the wholesale price. By cutting out the middleman, we pass the savings directly to you. Our prices are guaranteed! If you find a lower price on any item within 30 days, we will refund the difference. We offer free shipping on all orders over $75.00. Most orders are processed within 24 hours and arrive at your door in 3-5 business days. You can also order via our mail order catalog if you prefer to shop offline. Our customer service team is available 24/7 to help you find the perfect fit. Check our website for today's online specials before they sell out!",
+                vocabulary: [ 
+                    { term: "Wholesale price", phonetic: "/ˈhoʊlseɪl praɪs/", def: "The price of goods sold in large quantities, usually lower than retail.", ex: "By buying at the wholesale price, retailers can make a profit." }, 
+                    { term: "Guaranteed", phonetic: "/ˌɡærənˈtiːd/", def: "A formal promise or assurance that a product will meet certain standards.", ex: "Our prices are guaranteed!" },
+                    { term: "Mail order", phonetic: "/meɪl ˈɔːrdər/", def: "The buying or selling of goods through the mail, via catalog or online.", ex: "You can send a check to our mail order address to purchase the sneakers." }, 
+                    { term: "Specials", phonetic: "/ˈspɛʃəlz/", def: "Products offered at a reduced price for a limited time.", ex: "Check our website for today's online specials before they sell out." }, 
+                    { term: "Free shipping", phonetic: "/friː ˈʃɪpɪŋ/", def: "Delivery of goods to the customer at no extra cost.", ex: "We offer free shipping on all orders over $75.00." }, 
+                    { term: "Retail", phonetic: "/ˈriːteɪl/", def: "The sale of goods to the public in relatively small quantities.", ex: "The retail value of these sneakers is $120, but you can get them for less today." } 
+                ], 
+                phrases: [ 
+                    { phrase: "Today's online specials are...", context: "Introducing current promotions." }, 
+                    { phrase: "Free shipping on all orders over...", context: "Encouraging customers to buy a minimum amount." }, 
+                    { phrase: "Our prices are guaranteed!", context: "Reassuring the customer about price matching." }, 
+                    { phrase: "Would you like to place an order?", context: "Closing the sale or asking for a commitment." }, 
+                    { phrase: "How can I help you today?", context: "Standard greeting for a retail or phone interaction." }, 
+                    { phrase: "We offer a full money-back guarantee.", context: "Reducing buyer risk." } 
+                ], 
+                dialogue: [ 
+                    { speaker: "A", name: "Customer", text: "Hello, I am calling about the Sneakers DiRect mail order catalog I received." }, 
+                    { speaker: "B", name: "Sales Rep", text: "Hello! How can I help you today?" }, 
+                    { speaker: "A", name: "Customer", text: "I am interested in the running shoes on page 12. Are they on sale?" }, 
+                    { speaker: "B", name: "Sales Rep", text: "Yes! Today's online specials include wholesale prices on all sneakers. The pair you are looking at is 20% off the retail price." }, 
+                    { speaker: "A", name: "Customer", text: "That is great. Do I have to pay for delivery?" }, 
+                    { speaker: "B", name: "Sales Rep", text: "If your order is over $75.00, we offer free shipping. The shoes you want are $80.00, so you qualify." }, 
+                    { speaker: "A", name: "Customer", text: "Perfect. And you guarantee the prices? I saw them cheaper on another website." }, 
+                    { speaker: "B", name: "Sales Rep", text: "Our prices are guaranteed! If you find a lower price within 30 days, we will refund the difference. Would you like to place an order?" }, 
+                    { speaker: "A", name: "Customer", text: "Yes, I'll take a size 10 in black. How long will delivery take?" }, 
+                    { speaker: "B", name: "Sales Rep", text: "Your order will be processed today and should arrive in 3 to 5 business days. Can I get your credit card details?" } 
+                ], 
+                grammarTip: { title: "Persuasive Language", explanation: "Use strong adjectives and absolute language to build trust.", example: "Instead of saying the price is good, say our prices are guaranteed!" }, 
+                quiz: [ 
+                    { q: "What is the minimum order amount to get free shipping?", opts: ["$50.00", "$75.00", "$100.00", "$25.00"], correct: 1, exp: "The promotion states: Free shipping on all orders over $75.00." }, 
+                    { q: "What is a wholesale price?", opts: ["The price for a single item", "The price of goods sold in large quantities", "The delivery fee", "The highest possible price"], correct: 1, exp: "Wholesale refers to buying goods in large quantities." },
+                    { q: "Which phrase is used to ask for a commitment from the buyer?", opts: ["How can I help you today?", "Today's online specials are...", "Would you like to place an order?", "Free shipping on all orders..."], correct: 2, exp: "'Would you like to place an order?' is the standard closing question." }, 
+                    { q: "What does retail mean?", opts: ["Selling in large quantities", "Selling to the public in small quantities", "Manufacturing goods", "Shipping for free"], correct: 1, exp: "Retail is the sale of goods to the public in relatively small quantities." } 
+                ] 
+            },
+            // --- UNIT 3: PRODUCT PROBLEMS ---
+            "product-problems": { 
+                title: "Product Problems", 
+                description: "Report faults, process returns, and handle defective items professionally.", 
+                level: "Intermediate", 
+                minutes: 25, 
+                imageUrl: "https://z-cdn-media.chatglm.cn/files/2991f74d-88b5-4c6f-ba3f-cb2d6ec0f99b.png?auth_key=1886232383-7a40e958786a4414adec12ab60678dd0-0-e2db0d015db18c068e8e69cc9d49ba38",
+                reading: `<p>Electronics Nation Service Department Manual. Chapter 4: Product Returns. We understand that sometimes products do not work as expected. Our return policy is designed to make the process as smooth as possible for our customers.</p>
+                <p>If a product is defective, you can return it to the service department within 30 days of purchase. You must provide the model number and the original receipt. Without these, we cannot process the return.</p>
+                <p>Once we verify the defect, the company can offer a full refund or a replacement. Our goal is to ensure every customer is satisfied with their purchase. If you choose a replacement, it will be shipped within 48 hours at no extra cost.</p>
+                <p>Please note that physical damage caused by the user is not covered under this policy. For warranty service beyond 30 days, please contact the manufacturer directly.</p>`,
+                readingAudioText: "Electronics Nation Service Department Manual. Chapter 4: Product Returns. We understand that sometimes products do not work as expected. Our return policy is designed to make the process as smooth as possible for our customers. If a product is defective, you can return it to the service department within 30 days of purchase. You must provide the model number and the original receipt. Without these, we cannot process the return. Once we verify the defect, the company can offer a full refund or a replacement. Our goal is to ensure every customer is satisfied with their purchase. If you choose a replacement, it will be shipped within 48 hours at no extra cost. Please note that physical damage caused by the user is not covered under this policy. For warranty service beyond 30 days, please contact the manufacturer directly.",
+                vocabulary: [ 
+                    { term: "Defective", phonetic: "/dɪˈfɛktɪv/", def: "Having a flaw or imperfection; not working properly.", ex: "The screen on this phone is defective." }, 
+                    { term: "Refund", phonetic: "/ˈriːfʌnd/", def: "A repayment of money to a dissatisfied customer.", ex: "We can process a full refund if the item is defective." }, 
+                    { term: "Receipt", phonetic: "/rɪˈsiːt/", def: "A piece of paper acknowledging that money has been received or goods returned.", ex: "You must present your receipt to get a refund." }, 
+                    { term: "Replacement", phonetic: "/rɪˈpleɪsmənt/", def: "A new product provided in exchange for a faulty one.", ex: "Instead of a refund, the customer requested a replacement." }, 
+                    { term: "Model number", phonetic: "/ˈmɒdl ˈnʌmbər/", def: "A specific alphanumeric code identifying a particular product design.", ex: "The agent asked for the model number to look up the warranty." }, 
+                    { term: "Satisfied", phonetic: "/ˈsætɪsfaɪd/", def: "Content or pleased with what one has received.", ex: "Our goal is to ensure every customer is satisfied." } 
+                ], 
+                phrases: [ 
+                    { phrase: "I am not satisfied with this product.", context: "Expressing disappointment politely." }, 
+                    { phrase: "Could you provide the model number?", context: "Asking for product identification." }, 
+                    { phrase: "Do you have your receipt?", context: "Verifying proof of purchase." }, 
+                    { phrase: "We can offer a full refund.", context: "Proposing a monetary remedy." }, 
+                    { phrase: "I would like to request a replacement.", context: "Asking for a new item instead of money." }, 
+                    { phrase: "Let me fill out the return form.", context: "Processing the paperwork for a return." } 
+                ], 
+                dialogue: [ 
+                    { speaker: "A", name: "Customer", text: "Hello, I am calling about a toaster I bought yesterday. I am not satisfied with it." }, 
+                    { speaker: "B", name: "Service Agent", text: "I am sorry to hear that. What seems to be the issue?" }, 
+                    { speaker: "A", name: "Customer", text: "The heating element is defective. It does not get hot at all. I tried it three times this morning." }, 
+                    { speaker: "B", name: "Service Agent", text: "I apologize for the inconvenience. Could you provide the model number?" }, 
+                    { speaker: "A", name: "Customer", text: "It is model TX-200. I have my receipt right here. I bought it at your downtown store." }, 
+                    { speaker: "B", name: "Service Agent", text: "Thank you. Since it is within 30 days, we can process a return. Would you prefer a refund or a replacement?" }, 
+                    { speaker: "A", name: "Customer", text: "I would like to request a replacement, please. I really liked the design." }, 
+                    { speaker: "B", name: "Service Agent", text: "No problem. Let me fill out the return form for you right now. We will ship a new one within 48 hours at no extra cost." }, 
+                    { speaker: "A", name: "Customer", text: "That sounds great. Do I need to send the defective one back?" }, 
+                    { speaker: "B", name: "Service Agent", text: "Yes, we will email you a prepaid shipping label. Just drop it off at any post office." } 
+                ], 
+                grammarTip: { title: "Reporting Issues Politely", explanation: "Use indirect language (e.g., appears to be) instead of bluntly saying it is broken.", example: "Instead of The toaster is broken, say The heating element appears to be defective." }, 
+                quiz: [ 
+                    { q: "What does it mean if a product is defective?", opts: ["It is brand new.", "It has a flaw or is not working properly.", "It is the latest model.", "It was shipped for free."], correct: 1, exp: "Defective means having a flaw or imperfection." }, 
+                    { q: "If a customer wants their money back, what are they requesting?", opts: ["A refund", "A receipt", "A replacement", "A discount"], correct: 0, exp: "A refund is a repayment of money to a dissatisfied customer." }, 
+                    { q: "What document is required to process a return?", opts: ["A manual", "A receipt", "A catalog", "A ticket"], correct: 1, exp: "The agent asks: Do you have your receipt?" }, 
+                    { q: "What does the customer request instead of a refund?", opts: ["A discount", "A replacement", "An apology", "A gift card"], correct: 1, exp: "The customer says: I would like to request a replacement, please." } 
+                ] 
+            },
+            // --- UNIT 4: TELEPHONING ---
+            "telephoning": { 
+                title: "Telephoning", 
+                description: "Master phone etiquette, take messages, and handle professional calls with confidence.", 
+                level: "Intermediate", 
+                minutes: 25, 
+                imageUrl: "https://z-cdn-media.chatglm.cn/files/30761fa8-8b35-49e1-9f13-4589281d4d15.png?auth_key=1886231506-11e43709d49a4d07a9767849ab81b95b-0-0a69d388692ea0d8fdbe2343b5e49358",
+                reading: `<p>Business Blog Weekly. Good etiquette on the telephone can make or break your relationship with a client. The way you answer the phone sets the tone for the entire conversation.</p>
+                <p>Always identify yourself and your company immediately. Speak clearly and smile, as this changes the tone of your voice to sound more welcoming. Ask who is calling before transferring the call.</p>
+                <p>If the person is unavailable, offer to take a message. Never leave a caller on hold for more than 30 seconds without checking back. If the wait will be longer, offer to call them back.</p>
+                <p>When ending the call, summarize any actions to be taken and thank the caller for their time. A polite closing leaves a lasting positive impression.</p>`,
+                readingAudioText: "Business Blog Weekly. Good etiquette on the telephone can make or break your relationship with a client. The way you answer the phone sets the tone for the entire conversation. Always identify yourself and your company immediately. Speak clearly and smile, as this changes the tone of your voice to sound more welcoming. Ask who is calling before transferring the call. If the person is unavailable, offer to take a message. Never leave a caller on hold for more than 30 seconds without checking back. If the wait will be longer, offer to call them back. When ending the call, summarize any actions to be taken and thank the caller for their time. A polite closing leaves a lasting positive impression.",
+                vocabulary: [ 
+                    { term: "Etiquette", phonetic: "/ˈɛtɪkɛt/", def: "The customary code of polite behavior in society or among members of a particular profession.", ex: "Good etiquette on the telephone can make or break a client relationship." }, 
+                    { term: "Extension", phonetic: "/ɪkˈstɛnʃən/", def: "An additional telephone number connected to a main line.", ex: "You can reach me directly at extension 405." } 
+                ], 
+                phrases: [ 
+                    { phrase: "May I ask who is calling?", context: "A polite way to identify the caller before transferring the call." }, 
+                    { phrase: "Would you like to leave a message?", context: "Offering to record information for the unavailable colleague." } 
+                ], 
+                dialogue: [ 
+                    { speaker: "A", name: "Receptionist", text: "Good morning, Horizon Capital. How may I direct your call?" }, 
+                    { speaker: "B", name: "Caller", text: "Good morning. I would like to speak with Julian Vance in the M&A department, please." }, 
+                    { speaker: "A", name: "Receptionist", text: "May I ask who is calling?" }, 
+                    { speaker: "B", name: "Caller", text: "This is Marcus from Global Tech." }, 
+                    { speaker: "A", name: "Receptionist", text: "Thank you, Marcus. Let me check if Mr. Vance is available. Please hold." }, 
+                    { speaker: "A", name: "Receptionist", text: "Mr. Marcus, I'm afraid Mr. Vance is currently in a meeting. Would you like to leave a message?" }, 
+                    { speaker: "B", name: "Caller", text: "Yes, please. Could you ask him to call me back? He has my extension." }, 
+                    { speaker: "A", name: "Receptionist", text: "Of course. I'll make sure he gets the message as soon as he returns. Is there anything else I can help you with?" }, 
+                    { speaker: "B", name: "Caller", text: "No, that's all. Thank you for your help." }, 
+                    { speaker: "A", name: "Receptionist", text: "You're welcome. Have a great day." } 
+                ], 
+                grammarTip: { title: "Telephone Etiquette and Politeness", explanation: "Always use modal verbs (may, could, would) to sound polite and professional.", example: "Instead of Who is this?, say May I ask who is calling?" }, 
+                quiz: [ 
+                    { q: "According to the text, what can telephone etiquette do?", opts: ["Reduce phone bills", "Make or break a relationship with a client", "Speed up internet connection", "Replace face-to-face meetings"], correct: 1, exp: "The text states: Good etiquette on the telephone can make or break your relationship with a client." }, 
+                    { q: "Which phrase is the most polite way to identify a caller?", opts: ["Who is this?", "State your name.", "May I ask who is calling?", "What is your name?"], correct: 2, exp: "May I ask who is calling? uses a modal verb and is the standard polite business phrase." } 
+                ] 
+            },
+            // --- UNIT 5: EMAILS ---
+            "emails": { 
+                title: "Emails", 
+                description: "Understand email address structures and master inbox actions like replying and forwarding.", 
+                level: "Intermediate", 
+                minutes: 30, 
+                imageUrl: "https://z-cdn-media.chatglm.cn/files/44014175-92fb-44fd-8ee6-42efd0b696d1.png?auth_key=1886231506-b7eb7217548e410fa074bc6d6dabe6f4-0-1d734fe689111aabdec7dbc12bcfb2ac",
+                reading: `<p>Email for Beginners: A quick lesson. An email address is made up of three parts: the username, the @ symbol, and the domain name. For example, in john.doe@company.com, 'john.doe' is the username, '@' is the symbol, and 'company.com' is the domain name.</p>
+                <p>When you receive an email, you have several options. You can save it for later reference, delete it if it's spam, reply to the sender, or forward it to a new person. Always check the 'To' and 'Cc' fields before hitting send to avoid embarrassing mistakes.</p>
+                <p>A clear subject line is crucial. It helps the recipient prioritize their inbox. Use professional greetings and sign-offs to maintain a business tone.</p>`,
+                readingAudioText: "Email for Beginners: A quick lesson. An email address is made up of three parts: the username, the @ symbol, and the domain name. For example, in john.doe@company.com, 'john.doe' is the username, '@' is the symbol, and 'company.com' is the domain name. When you receive an email, you have several options. You can save it for later reference, delete it if it's spam, reply to the sender, or forward it to a new person. Always check the 'To' and 'Cc' fields before hitting send to avoid embarrassing mistakes. A clear subject line is crucial. It helps the recipient prioritize their inbox. Use professional greetings and sign-offs to maintain a business tone.",
+                vocabulary: [ 
+                    { term: "Domain name", phonetic: "/doʊˈmeɪn neɪm/", def: "The part of an email address after the @ symbol, representing the mail server's address.", ex: "For jane@gmail.com, gmail.com is the domain name." }, 
+                    { term: "Forward", phonetic: "/ˈfɔːrwərd/", def: "To send an email you have received to another person or email address.", ex: "Please forward the meeting agenda to the rest of the team." } 
+                ], 
+                phrases: [ 
+                    { phrase: "Did you get my email?", context: "Checking if a sent message was received." }, 
+                    { phrase: "I will forward it to you right now.", context: "Promising to send a received message to someone else." } 
+                ], 
+                dialogue: [ 
+                    { speaker: "A", name: "Sarah", text: "Hi Bob, did you get my email with the presentation attached?" }, 
+                    { speaker: "B", name: "Bob", text: "No, I didn't receive it. Did you type my email address correctly?" }, 
+                    { speaker: "A", name: "Sarah", text: "Let me check. I sent it to bob.smith@company.com." }, 
+                    { speaker: "B", name: "Bob", text: "Ah, that's the problem. My username doesn't have a dot. It's just bobsmith." }, 
+                    { speaker: "A", name: "Sarah", text: "Got it. I'll forward it to the correct address right now." }, 
+                    { speaker: "B", name: "Bob", text: "Great. Once I get it, I'll reply to your thread with my feedback." }, 
+                    { speaker: "A", name: "Sarah", text: "Perfect. Make sure you save the attachment to your computer, as the file is quite large." }, 
+                    { speaker: "B", name: "Bob", text: "Will do. I'll CC the manager so she's in the loop." } 
+                ], 
+                grammarTip: { title: "Parts of an Email Address", explanation: "An email address is made up of exactly three parts: the username, the @ symbol, and the domain name.", example: "In john.doe@gmail.com, john.doe is the username, @ is the symbol, and gmail.com is the domain name." }, 
+                quiz: [ 
+                    { q: "What are the three parts of an email address?", opts: ["Greeting, body, sign-off", "Username, @ symbol, domain name", "Inbox, sent, drafts", "CC, BCC, Subject"], correct: 1, exp: "An email address is made up of the username, the @ symbol, and the domain name." }, 
+                    { q: "If you want to send an email you received to a completely new person, what action should you take?", opts: ["Reply", "Delete", "Forward", "Save"], correct: 2, exp: "To send a received message to another person, you use the Forward function." } 
+                ] 
+            },
+            // --- UNIT 6: LETTERS ---
+            "letters": { 
+                title: "Letters", 
+                description: "Structure formal business letters correctly using standard elements.", 
+                level: "Intermediate", 
+                minutes: 30, 
+                imageUrl: "https://z-cdn-media.chatglm.cn/files/fe01e9ff-f6ea-41f0-8485-813e31ee317c.png?auth_key=1886231506-73c5fd5c4c3043f1b398dcae8f42b1f1-0-00972d6fa683b3ab7890c9a0c398493d",
+                reading: `<p>Business Letters 10.1: A Guide for the Modern Professional. A modern professional business letter follows a strict structure. It begins with the sender's return address and the date. Below that, you should include the recipient's name and address.</p>
+                <p>The salutation is the greeting at the beginning of a letter. If you know the recipient's name, use 'Dear Mr. Smith' and close with 'Yours sincerely'. If you do not know their name, use 'Dear Sir or Madam' and close with 'Yours faithfully'.</p>
+                <p>The body of the letter should be concise and clearly state your purpose. Finally, end with your signature and printed name. Always proofread for spelling and grammar errors before sending.</p>`,
+                readingAudioText: "Business Letters 10.1: A Guide for the Modern Professional. A modern professional business letter follows a strict structure. It begins with the sender's return address and the date. Below that, you should include the recipient's name and address. The salutation is the greeting at the beginning of a letter. If you know the recipient's name, use 'Dear Mr. Smith' and close with 'Yours sincerely'. If you do not know their name, use 'Dear Sir or Madam' and close with 'Yours faithfully'. The body of the letter should be concise and clearly state your purpose. Finally, end with your signature and printed name. Always proofread for spelling and grammar errors before sending.",
+                vocabulary: [ 
+                    { term: "Salutation", phonetic: "/ˌsæljʊˈteɪʃən/", def: "The greeting at the beginning of a letter (e.g., Dear Mr. Smith).", ex: "The salutation Dear Sir or Madam is used when the recipient's name is unknown." }, 
+                    { term: "Closing", phonetic: "/ˈkloʊzɪŋ/", def: "The phrase used to end the letter before the signature, such as Yours sincerely.", ex: "A formal closing like Yours sincerely is appropriate for business letters." } 
+                ], 
+                phrases: [ 
+                    { phrase: "Please draft a formal letter to...", context: "Instructing someone to write a business letter." }, 
+                    { phrase: "Do not forget to sign it at the bottom.", context: "Reminding to add the signature." } 
+                ], 
+                dialogue: [ 
+                    { speaker: "A", name: "Manager", text: "Could you please draft a formal letter to our new supplier, Mr. Henderson?" }, 
+                    { speaker: "B", name: "Assistant", text: "Sure. Should I use our standard company letterhead?" }, 
+                    { speaker: "A", name: "Manager", text: "Yes, and make sure to include the return address at the top." }, 
+                    { speaker: "B", name: "Assistant", text: "What salutation should I use? I know we met him last week." }, 
+                    { speaker: "A", name: "Manager", text: "Use 'Dear Mr. Henderson,'. It's professional but polite." }, 
+                    { speaker: "B", name: "Assistant", text: "And what about the closing?" }, 
+                    { speaker: "A", name: "Manager", text: "Use 'Yours sincerely,' followed by your signature. I'll sign it before you mail it." }, 
+                    { speaker: "B", name: "Assistant", text: "Got it. I'll have it ready for your review in an hour." } 
+                ], 
+                grammarTip: { title: "Elements of a Business Letter", explanation: "A modern professional business letter follows a strict structure: return address, date, recipient's address, salutation, body, closing, and signature.", example: "If you start with Dear Mr. Smith, you must close with Yours sincerely." }, 
+                quiz: [ 
+                    { q: "What is the greeting at the beginning of a formal business letter called?", opts: ["Signature", "Salutation", "Body", "Closing"], correct: 1, exp: "The salutation is the greeting (e.g., Dear Mr. Smith) at the beginning of a letter." }, 
+                    { q: "If you begin a letter with Dear Sir or Madam, which closing should you use?", opts: ["Yours sincerely", "Best regards", "Yours faithfully", "Cheers"], correct: 2, exp: "Yours faithfully is the traditional closing when the recipient's name is unknown." } 
+                ] 
+            },
+            // --- UNIT 7: FAXES ---
+            "faxes": { 
+                title: "Faxes", 
+                description: "Understand how to send faxes correctly, including the use of cover sheets.", 
+                level: "Intermediate", 
+                minutes: 20, 
+                imageUrl: "https://z-cdn-media.chatglm.cn/files/468ebabe-bc04-46c4-8b06-22c92e7c8105.png?auth_key=1886234541-967ef151fc2c46969b247f8b216f18e8-0-3780110589e5d9bfd8b5dab180991689",
+                reading: `<p>How to Send a Fax. Despite the rise of email, faxing remains important for legal and medical documents. When sending a fax, always include a cover sheet.</p>
+                <p>The cover sheet should contain your name, your company's name, your telephone number, and the subject of the fax. This ensures your pages reach the right person and provides contact information if the transmission fails.</p>
+                <p>Load your documents face up into the feeder. Dial the number carefully and press send. Wait for the confirmation page to print, which proves the transmission was successful.</p>`,
+                readingAudioText: "How to Send a Fax. Despite the rise of email, faxing remains important for legal and medical documents. When sending a fax, always include a cover sheet. The cover sheet should contain your name, your company's name, your telephone number, and the subject of the fax. This ensures your pages reach the right person and provides contact information if the transmission fails. Load your documents face up into the feeder. Dial the number carefully and press send. Wait for the confirmation page to print, which proves the transmission was successful.",
+                vocabulary: [ 
+                    { term: "Cover sheet", phonetic: "/ˈkʌvər ʃiːt/", def: "A page sent before the actual document, containing sender and recipient information.", ex: "Always include a cover sheet so the recipient knows who the fax is for." }, 
+                    { term: "Transmission", phonetic: "/trænzˈmɪʃən/", def: "The process of sending an electronic document over a telephone line.", ex: "The transmission of the contract was successful." } 
+                ], 
+                phrases: [ 
+                    { phrase: "Always include a cover sheet.", context: "Instructing someone on proper fax etiquette." }, 
+                    { phrase: "Did the transmission go through?", context: "Checking if the fax was successful." } 
+                ], 
+                dialogue: [ 
+                    { speaker: "A", name: "Office Manager", text: "Can you send this contract to the client via fax?" }, 
+                    { speaker: "B", name: "Assistant", text: "Sure. Do I need to prepare anything before dialing?" }, 
+                    { speaker: "A", name: "Office Manager", text: "Yes, always include a cover sheet. It makes sure that your pages reach the right person." }, 
+                    { speaker: "B", name: "Assistant", text: "Got it. I'll put their name and our contact info on it. How many pages is it?" }, 
+                    { speaker: "A", name: "Office Manager", text: "It's five pages, plus the cover sheet. Dial their main number: 555-0192." }, 
+                    { speaker: "B", name: "Assistant", text: "Okay, I'll send it now. Did the transmission go through?" }, 
+                    { speaker: "A", name: "Office Manager", text: "Let me check the machine. Yes, the confirmation page printed. It was successful." }, 
+                    { speaker: "B", name: "Assistant", text: "Great. I'll file the confirmation page with our records." } 
+                ], 
+                grammarTip: { title: "Imperatives for Instructions", explanation: "When giving instructions on how to use a machine like a fax, use the imperative form (the base verb) to give clear, direct commands.", example: "Include a cover sheet. Dial the number. Wait for the confirmation tone." }, 
+                quiz: [ 
+                    { q: "According to the guide, what should you always include when sending a fax?", opts: ["A paperclip", "A cover sheet", "A handwritten note", "A business card"], correct: 1, exp: "The text states: Always include a cover sheet..." }, 
+                    { q: "What is the main purpose of following the fax steps and using a cover sheet?", opts: ["To make the fax longer", "To make sure pages reach the right person", "To save paper", "To avoid paying phone bills"], correct: 1, exp: "The guide says: Follow these steps... to make sure that your pages reach the right person." } 
+                ] 
+            },
+            // --- UNIT 8: TYPES OF MEETINGS ---
+            "types-of-meetings": { 
+                title: "Types of Meetings", 
+                description: "Identify meeting formats, interpret agendas, and communicate changes professionally.", 
+                level: "Intermediate", 
+                minutes: 25, 
+                imageUrl: "https://z-cdn-media.chatglm.cn/files/3fcd327d-7269-4f1a-87da-f433c4bc74aa.png?auth_key=1886234541-7196a6ff2cfe42648abf3594d12e9c71-0-cbc900811da963fb558abbe0d31e4290",
+                reading: `<p>Types of Meetings. Meetings can be formal or informal. A formal board meeting requires an agenda and minutes to be taken. These meetings follow strict parliamentary procedures.</p>
+                <p>Informal meetings, like brainstorming sessions, are more relaxed but still need a clear objective. If you need to delay a meeting, you should use the word 'postpone' rather than saying 'push back' to maintain a professional tone.</p>
+                <p>Always circulate the agenda 24 hours before the meeting so participants can prepare. This ensures the meeting stays on track and finishes on time.</p>`,
+                readingAudioText: "Types of Meetings. Meetings can be formal or informal. A formal board meeting requires an agenda and minutes to be taken. These meetings follow strict parliamentary procedures. Informal meetings, like brainstorming sessions, are more relaxed but still need a clear objective. If you need to delay a meeting, you should use the word 'postpone' rather than saying 'push back' to maintain a professional tone. Always circulate the agenda 24 hours before the meeting so participants can prepare. This ensures the meeting stays on track and finishes on time.",
+                vocabulary: [ 
+                    { term: "Agenda", phonetic: "/əˈdʒɛndə/", def: "A list of items to be discussed or accomplished during a meeting.", ex: "Please review the agenda for the May 18th meeting before you arrive." }, 
+                    { term: "Postpone", phonetic: "/poʊstˈpoʊn/", def: "To cause an event to take place at a later time than originally scheduled.", ex: "We had to postpone the meeting because the manager was sick." } 
+                ], 
+                phrases: [ 
+                    { phrase: "Let's schedule a board meeting.", context: "Proposing a formal discussion." }, 
+                    { phrase: "We need to postpone the meeting.", context: "Informing someone of a schedule change." } 
+                ], 
+                dialogue: [ 
+                    { speaker: "A", name: "Sarah", text: "Hi Marcus, did you see the flyer for the Business Timekeeping seminar?" }, 
+                    { speaker: "B", name: "Marcus", text: "Yes, it's being led by Keith Tyler, right? In Conference Room C?" }, 
+                    { speaker: "A", name: "Sarah", text: "Exactly. It's scheduled for Wednesday at 3:00 PM. Are you attending?" }, 
+                    { speaker: "B", name: "Marcus", text: "I planned to, but I have a conflict. Can we postpone our review meeting until Thursday?" }, 
+                    { speaker: "A", name: "Sarah", text: "Sure. Let's push it to 10:00 AM Thursday. I'll send out a revised agenda." }, 
+                    { speaker: "B", name: "Marcus", text: "Perfect. Will there be minutes taken at the seminar?" }, 
+                    { speaker: "A", name: "Sarah", text: "Yes, the admin team will handle the minutes and circulate them afterwards." }, 
+                    { speaker: "B", name: "Marcus", text: "Great. I'll review them when I get back. Thanks for rescheduling." } 
+                ], 
+                grammarTip: { title: "Formal vs. Informal Meeting Language", explanation: "Your tone should match the type of meeting. For formal board meetings, use professional phrasing like postpone, agenda, and memo.", example: "Formal: The meeting has been postponed. Informal: We pushed the meeting back." }, 
+                quiz: [ 
+                    { q: "What document lists the morning, afternoon, and evening activities for May 18th?", opts: ["A memo", "An agenda", "A contract", "A receipt"], correct: 1, exp: "The agenda is the list of items to be discussed or accomplished during a meeting." }, 
+                    { q: "What does it mean to postpone a meeting?", opts: ["To cancel it permanently", "To make it shorter", "To delay it to a later time", "To move it to a bigger room"], correct: 2, exp: "To postpone means to cause an event to take place at a later time than originally scheduled." } 
+                ] 
+            },
+            // --- UNIT 9: MEETING ETIQUETTE ---
+            "meeting-etiquette": { 
+                title: "Meeting Etiquette", 
+                description: "Participate professionally by avoiding bickering, managing objections, and showing courtesy.", 
+                level: "Intermediate", 
+                minutes: 25, 
+                imageUrl: "https://z-cdn-media.chatglm.cn/files/914f6479-7313-468f-824e-cced930d1396.png?auth_key=1886234541-b6ff94e2def942bca08d704ab3b7efdd-0-4cfd7ac2e6efa1a5f1ca0844160e0b53",
+                reading: `<p>Meeting Etiquette. Good meeting etiquette means stating your opinion clearly but only once. Avoid bickering over small details, as this wastes everyone's time.</p>
+                <p>Listen actively when others are speaking. Do not interrupt. If you disagree, wait for them to finish and then say, 'I have an objection to that point.'</p>
+                <p>If you cannot attend, you should formally send your apologies to the chairperson beforehand. Arriving late is disruptive, so always be punctual. Turn off your phone to minimize distractions.</p>`,
+                readingAudioText: "Meeting Etiquette. Good meeting etiquette means stating your opinion clearly but only once. Avoid bickering over small details, as this wastes everyone's time. Listen actively when others are speaking. Do not interrupt. If you disagree, wait for them to finish and then say, 'I have an objection to that point.' If you cannot attend, you should formally send your apologies to the chairperson beforehand. Arriving late is disruptive, so always be punctual. Turn off your phone to minimize distractions.",
+                vocabulary: [ 
+                    { term: "To send your apologies", phonetic: "/sɛnd jɔːr əˈpɒlədʒiz/", def: "To formally notify someone that you cannot attend a meeting.", ex: "John could not make it today, but he sent his apologies." }, 
+                    { term: "Objection", phonetic: "/əbˈdʒɛkʃən/", def: "An expression or feeling of disapproval or opposition.", ex: "I have an objection to this proposal; the budget is too high." } 
+                ], 
+                phrases: [ 
+                    { phrase: "I'd like to state my opinion.", context: "Politely asking to speak." }, 
+                    { phrase: "Please send your apologies.", context: "Instructing someone who cannot attend." } 
+                ], 
+                dialogue: [ 
+                    { speaker: "A", name: "Chairperson", text: "Let's move to the next item. Mark could not attend today, but he sent his apologies." }, 
+                    { speaker: "B", name: "Sarah", text: "I'd like to state my opinion on the new marketing budget. I think it is too high." }, 
+                    { speaker: "A", name: "Chairperson", text: "Noted. Does anyone else have an objection?" }, 
+                    { speaker: "C", name: "Tom", text: "I agree with Sarah. We are bickering over ad placements, but the core budget is the issue." }, 
+                    { speaker: "A", name: "Chairperson", text: "Let's not bicker. Tom, please state your opinion once and we will move on." }, 
+                    { speaker: "C", name: "Tom", text: "We should cut the budget by 10% and reallocate to digital." }, 
+                    { speaker: "A", name: "Chairperson", text: "Thank you. I will note that. Let's put this to a vote." } 
+                ], 
+                grammarTip: { title: "Diplomatic Language in Meetings", explanation: "According to business blogs, good meeting etiquette means stating your opinion clearly but only once, and avoiding bickering. If you must disagree, use diplomatic language rather than aggressive words.", example: "Instead of saying You are wrong, say I have an objection to that point." }, 
+                quiz: [ 
+                    { q: "According to the Business Blog, what should you do if you cannot attend a meeting?", opts: ["Just do not show up", "Send an email later", "Send your apologies", "Call during the meeting"], correct: 2, exp: "The blog advises that you should formally send your apologies if you are unable to attend." }, 
+                    { q: "What does it mean to bicker in a meeting?", opts: ["To present a formal report", "To argue about petty and trivial matters", "To agree with the chairperson", "To take meeting minutes"], correct: 1, exp: "To bicker means to argue about small, unimportant details, which is bad meeting etiquette." } 
+                ] 
+            },
+            // --- UNIT 10: PRESENTATIONS ---
+            "presentations": { 
+                title: "Making a Presentation at a Meeting", 
+                description: "Deliver structured presentations by introducing your subject, outlining sections, and using charts.", 
+                level: "Intermediate", 
+                minutes: 30, 
+                imageUrl: "https://z-cdn-media.chatglm.cn/files/21955048-df0f-4a43-bde7-5bd361c832c4.png?auth_key=1886234541-7d29c9e06d9846fea8e1dd7c32c32ec6-0-76009fbbe2928529cffa11fd5770f6b5",
+                reading: `<p>Making a Presentation at a Meeting. A professional presentation must be well-structured. Always start by introducing yourself and your subject. Outline the different sections so the audience knows what to expect.</p>
+                <p>Use visual aids like charts or graphs to support your points. Speak clearly and make eye contact with different people in the room. Avoid reading directly from your slides.</p>
+                <p>When you finish a section, summarize it. This reinforces the information before moving on. At the end, open the floor for a Q&A session. Answer questions concisely and confidently.</p>`,
+                readingAudioText: "Making a Presentation at a Meeting. A professional presentation must be well-structured. Always start by introducing yourself and your subject. Outline the different sections so the audience knows what to expect. Use visual aids like charts or graphs to support your points. Speak clearly and make eye contact with different people in the room. Avoid reading directly from your slides. When you finish a section, summarize it. This reinforces the information before moving on. At the end, open the floor for a Q&A session. Answer questions concisely and confidently.",
+                vocabulary: [ 
+                    { term: "To introduce", phonetic: "/ˌɪntrəˈduːc/", def: "To present yourself and your subject at the beginning of a talk.", ex: "Start by introducing yourself and your subject to the audience." }, 
+                    { term: "To summarize", phonetic: "/ˈsʌməraɪz/", def: "To briefly repeat the main points at the end of a section.", ex: "When you finish a section, summarize it so the audience remembers the key points." } 
+                ], 
+                phrases: [ 
+                    { phrase: "I'd like to start by introducing myself...", context: "Opening a presentation." }, 
+                    { phrase: "Let's move on to the next section.", context: "Signposting a transition." } 
+                ], 
+                dialogue: [ 
+                    { speaker: "A", name: "Presenter", text: "Good morning, everyone. I'd like to start by introducing myself and my subject." }, 
+                    { speaker: "A", name: "Presenter", text: "I am David, the Head of Sales. Today, I will talk about our Q3 performance." }, 
+                    { speaker: "A", name: "Presenter", text: "I have divided this into three parts. Let me outline the different sections for you." }, 
+                    { speaker: "B", name: "Audience Member", text: "Excuse me, can we go back to the previous slide? I missed the revenue figure." }, 
+                    { speaker: "A", name: "Presenter", text: "Certainly. As you can see on this chart, the expected reach is 2 million." }, 
+                    { speaker: "B", name: "Audience Member", text: "Thank you. That clarifies things." }, 
+                    { speaker: "A", name: "Presenter", text: "To summarize this section, our top product sold out completely. Now, let's move on to the next section: costs." }, 
+                    { speaker: "B", name: "Audience Member", text: "Will there be a Q&A at the end?" }, 
+                    { speaker: "A", name: "Presenter", text: "Yes, I will summarize everything and then take your questions." } 
+                ], 
+                grammarTip: { title: "Structuring a Presentation", explanation: "A professional presentation must be well-structured. Always start by introducing yourself and your subject. Then, outline the different sections so the audience knows what to expect.", example: "When you finish a section, summarize it. This reinforces the information before moving on." }, 
+                quiz: [ 
+                    { q: "According to the presentation memo, what should you do at the very beginning of your talk?", opts: ["Show a bar graph", "Introduce yourself and your subject", "Summarize the costs", "Ask for questions"], correct: 1, exp: "The memo states: Start by introducing yourself and your subject." }, 
+                    { q: "What should you do immediately after you finish a section of your presentation?", opts: ["Sit down", "Outline the next meeting", "Summarize it", "Introduce yourself again"], correct: 2, exp: "The guidelines say: When you finish a section, summarize it." } 
+                ] 
+            },
+            // --- UNIT 11: TIME MANAGEMENT ---
+            "time-management": { 
+                title: "Time Management", 
+                description: "Discuss timekeeping, avoid the disadvantages of poor scheduling, and learn to prioritize tasks.", 
+                level: "Intermediate", 
+                minutes: 25, 
+                imageUrl: "https://z-cdn-media.chatglm.cn/files/27445eed-e624-4797-8b15-fd23030f99fa.png?auth_key=1886234541-ede978769b6a4a39b4dac07d4fe427fd-0-97b7aa4c5edf783e90cf01a1c7474f6d",
+                reading: `<p>Time Management. Good timekeeping is essential for maintaining a professional reputation. Arriving late to meetings or missing deadlines signals a lack of respect for others' time.</p>
+                <p>A major disadvantage of bad timekeeping is missing deadlines. This can lead to lost contracts and damaged client relationships. You must prioritize your tasks to ensure the most urgent ones are finished first.</p>
+                <p>Use tools like digital calendars and to-do lists to stay organized. Break large projects into smaller, manageable chunks. Avoid multitasking, as it reduces efficiency and increases errors.</p>`,
+                readingAudioText: "Time Management. Good timekeeping is essential for maintaining a professional reputation. Arriving late to meetings or missing deadlines signals a lack of respect for others' time. A major disadvantage of bad timekeeping is missing deadlines. This can lead to lost contracts and damaged client relationships. You must prioritize your tasks to ensure the most urgent ones are finished first. Use tools like digital calendars and to-do lists to stay organized. Break large projects into smaller, manageable chunks. Avoid multitasking, as it reduces efficiency and increases errors.",
+                vocabulary: [ 
+                    { term: "Timekeeping", phonetic: "/ˈtaɪmˌkiːpɪŋ/", def: "The practice of being punctual and managing one's time effectively.", ex: "Good timekeeping is essential for maintaining a professional reputation." }, 
+                    { term: "To prioritize", phonetic: "/praɪˈɔːrɪtaɪz/", def: "To designate or treat something as more important than other things.", ex: "You must prioritize your tasks to ensure the most urgent ones are finished first." } 
+                ], 
+                phrases: [ 
+                    { phrase: "Are you attending the timekeeping seminar?", context: "Asking about participation in a training session." }, 
+                    { phrase: "I need to prioritize my tasks.", context: "Stating the need to organize work by importance." } 
+                ], 
+                dialogue: [ 
+                    { speaker: "A", name: "Sarah", text: "Hey Marcus, did you see the flyer for the Business Timekeeping seminar?" }, 
+                    { speaker: "B", name: "Marcus", text: "Yes, it's being led by Keith Tyler, right? In Conference Room C?" }, 
+                    { speaker: "A", name: "Sarah", text: "Exactly. It's scheduled for Wednesday at 3:00 PM. Are you attending?" }, 
+                    { speaker: "B", name: "Marcus", text: "I think so. I really need to learn how to prioritize my tasks better." }, 
+                    { speaker: "A", name: "Sarah", text: "Me too. The brochure says a major disadvantage of bad timekeeping is missing deadlines." }, 
+                    { speaker: "B", name: "Marcus", text: "That's definitely true for me. I've been late on my last two reports." }, 
+                    { speaker: "A", name: "Sarah", text: "Well, let's try to be punctual for the seminar at least. We can sit together." }, 
+                    { speaker: "B", name: "Marcus", text: "Sounds good. I'll meet you outside Conference Room C at 2:55 PM." } 
+                ], 
+                grammarTip: { title: "Prepositions of Time (At, On, In)", explanation: "When scheduling events and discussing time management, use the correct prepositions. Use at for specific times, on for specific days, and in for months, years, or general parts of the day.", example: "The seminar is on Wednesday at 3:00 PM. (Not in Wednesday at 3:00)." }, 
+                quiz: [ 
+                    { q: "According to the flyer, where will the Business Timekeeping seminar take place?", opts: ["The main office", "Conference Room C", "Keith Tyler's office", "The boardroom"], correct: 1, exp: "The flyer and dialogue state the seminar is in Conference Room C." }, 
+                    { q: "What is identified as a disadvantage of bad timekeeping?", opts: ["Having too many seminars", "Missing deadlines", "Prioritizing too many tasks", "Being overly punctual"], correct: 1, exp: "The brochure mentions that a major disadvantage of bad timekeeping is missing deadlines." } 
+                ] 
+            },
+            // --- UNIT 12: NEGOTIATIONS ---
+            "negotiations": { 
+                title: "Negotiations", 
+                description: "Negotiate terms professionally using tips from Helen Roberts to avoid confrontation and reach mutual agreements.", 
+                level: "Advanced", 
+                minutes: 35, 
+                imageUrl: "https://z-cdn-media.chatglm.cn/files/f0d03249-988d-4164-b04c-7a3e11bc4ba0.png?auth_key=1886234541-90c31a4de06e4524829f6f6e62d3def2-0-23f29ffd1c5c6c3ccde2be423e810757",
+                reading: `<p>Tips for Better Negotiations by Helen Roberts. According to Helen Roberts, avoiding confrontation is key to a successful negotiation. Emotions can run high, but staying calm projects authority and control.</p>
+                <p>If the other party becomes hostile, do not respond with anger. Instead, acknowledge their position and redirect the conversation to the facts. Try to find a compromise where both sides make concessions.</p>
+                <p>Always do your research beforehand. Know your bottom line and your ideal outcome. Listen more than you speak, and ask open-ended questions to uncover the other party's true needs.</p>`,
+                readingAudioText: "Tips for Better Negotiations by Helen Roberts. According to Helen Roberts, avoiding confrontation is key to a successful negotiation. Emotions can run high, but staying calm projects authority and control. If the other party becomes hostile, do not respond with anger. Instead, acknowledge their position and redirect the conversation to the facts. Try to find a compromise where both sides make concessions. Always do your research beforehand. Know your bottom line and your ideal outcome. Listen more than you speak, and ask open-ended questions to uncover the other party's true needs.",
+                vocabulary: [ 
+                    { term: "Hostile", phonetic: "/ˈhɑːstaɪl/", def: "Unfriendly and aggressive.", ex: "The client was initially hostile, but we managed to calm them down." }, 
+                    { term: "Compromise", phonetic: "/ˈkɒmprəmaɪz/", def: "An agreement reached by each side making concessions.", ex: "Neither side got exactly what they wanted, but they reached a fair compromise." } 
+                ], 
+                phrases: [ 
+                    { phrase: "Let's try to avoid a confrontation.", context: "De-escalating a tense situation." }, 
+                    { phrase: "We need to find a compromise.", context: "Encouraging both sides to give up something." } 
+                ], 
+                dialogue: [ 
+                    { speaker: "A", name: "Marcus", text: "Did you read the article Tips for Better Negotiations by Helen Roberts?" }, 
+                    { speaker: "B", name: "Sarah", text: "Yes, she mentioned that we should always respect the other party and avoid confrontation." }, 
+                    { speaker: "A", name: "Marcus", text: "Exactly. The client's legal team can be very hostile, so we need to stay calm." }, 
+                    { speaker: "B", name: "Sarah", text: "Right. If they raise their voices, we should acknowledge their position and redirect to the facts." }, 
+                    { speaker: "A", name: "Marcus", text: "Yes. We also need to find a compromise where both sides make concessions." }, 
+                    { speaker: "B", name: "Sarah", text: "I agree. We should know our bottom line before we enter the room." }, 
+                    { speaker: "A", name: "Marcus", text: "Let's prepare a list of open-ended questions to uncover their true needs." }, 
+                    { speaker: "B", name: "Sarah", text: "Good idea. I'll draft the questions and send them to you for review." } 
+                ], 
+                grammarTip: { title: "Diplomatic Language in Negotiations", explanation: "According to Helen Roberts, avoiding confrontation is key to a successful negotiation. Use diplomatic language and conditionals (would, could, if) to make proposals sound flexible rather than demanding.", example: "Instead of You must lower the price, say Would you be able to lower the price if we increased the order volume?" }, 
+                quiz: [ 
+                    { q: "According to Helen Roberts' tips, what should you avoid during a negotiation?", opts: ["Making eye contact", "Confrontation", "Taking notes", "Asking questions"], correct: 1, exp: "The article Tips for Better Negotiations advises that you should avoid confrontation." }, 
+                    { q: "How does Marcus describe the client's legal team?", opts: ["Intense", "Mutual", "Hostile", "Compromising"], correct: 2, exp: "Marcus says: The client's legal team can be very hostile, so we need to stay calm." } 
+                ] 
+            },
+            // --- UNIT 13: CUSTOMER SERVICE ---
+            "customer-service": { 
+                title: "Customer Service", 
+                description: "Apply company policies from the employee manual to ensure customer satisfaction and repeat business.", 
+                level: "Intermediate", 
+                minutes: 30, 
+                imageUrl: "https://z-cdn-media.chatglm.cn/files/c40af2ce-03eb-48d8-b7a1-74d9fa904b55.png?auth_key=1886231506-c677a08e50fa497493c9bba838e99a5f-0-bbeeaee63d4cccf8a075f075e0905943",
+                reading: `<p>Customer Service. Section 5.4 of the Adventure Travel Ltd employee manual states that employees must always go the extra mile for clients. This means anticipating needs before the client even asks.</p>
+                <p>We value feedback from our guests to improve our services and ensure repeat business. A satisfied customer is our best marketing tool. Handle complaints with empathy and resolve them quickly.</p>
+                <p>Remember to use the guest's name, maintain eye contact, and smile. These small gestures build rapport and trust. If you don't know the answer to a question, find out and follow up promptly.</p>`,
+                readingAudioText: "Customer Service. Section 5.4 of the Adventure Travel Ltd employee manual states that employees must always go the extra mile for clients. This means anticipating needs before the client even asks. We value feedback from our guests to improve our services and ensure repeat business. A satisfied customer is our best marketing tool. Handle complaints with empathy and resolve them quickly. Remember to use the guest's name, maintain eye contact, and smile. These small gestures build rapport and trust. If you don't know the answer to a question, find out and follow up promptly.",
+                vocabulary: [ 
+                    { term: "Feedback", phonetic: "/ˈfiːdbæk/", def: "Information about reactions to a product or service, used to make improvements.", ex: "We value feedback from our guests to improve our services at Adventure Travel Ltd." }, 
+                    { term: "To go the extra mile", phonetic: "/ɡoʊ ðə ˈɛkstrə maɪl/", def: "To make more effort than is expected to achieve something.", ex: "Our company policy states that employees must always go the extra mile for clients." } 
+                ], 
+                phrases: [ 
+                    { phrase: "We go the extra mile.", context: "Expressing the company's commitment to exceptional service." }, 
+                    { phrase: "We value your feedback.", context: "Asking a customer for their opinion." } 
+                ], 
+                dialogue: [ 
+                    { speaker: "A", name: "Hotel Manager", text: "Have you read section 5.4 of the employee manual yet?" }, 
+                    { speaker: "B", name: "Employee", text: "Yes, the section on Customer Service for Adventure Travel Ltd." }, 
+                    { speaker: "A", name: "Hotel Manager", text: "Good. What is our main policy regarding our guests?" }, 
+                    { speaker: "B", name: "Employee", text: "We must always go the extra mile to ensure customer satisfaction." }, 
+                    { speaker: "A", name: "Hotel Manager", text: "Exactly. We value feedback from our guests to improve our services." }, 
+                    { speaker: "B", name: "Employee", text: "I understand. I will make sure to ask for feedback after every tour." }, 
+                    { speaker: "A", name: "Hotel Manager", text: "Perfect. Remember to use their names and smile. It builds trust." }, 
+                    { speaker: "B", name: "Employee", text: "I will. And if I don't know an answer, I'll find out and follow up promptly." } 
+                ], 
+                grammarTip: { title: "Synonyms and Professional Vocabulary", explanation: "In customer service, using a variety of professional vocabulary is important. When writing or speaking, try to use synonyms for common words to avoid repetition and sound more professional.", example: "Instead of saying We like your comments, say We value your feedback." }, 
+                quiz: [ 
+                    { q: "According to the Adventure Travel Ltd manual, what must employees do for their clients?", opts: ["Charge extra fees", "Go the extra mile", "Work shorter hours", "Ignore complaints"], correct: 1, exp: "The manual states that employees must always go the extra mile to ensure customer satisfaction." }, 
+                    { q: "What does the company value in order to improve its services?", opts: ["Repeat business", "Employee profiles", "Feedback", "Extra miles"], correct: 2, exp: "The manager says: We value their feedback to improve our services." } 
+                ] 
+            },
+            // --- UNIT 14: TRAVEL ARRANGEMENTS ---
+            "travel-arrangements": { 
+                title: "Making Travel Arrangements", 
+                description: "Book flights, arrange car rentals, and confirm accommodation itineraries for business trips.", 
+                level: "Intermediate", 
+                minutes: 25, 
+                imageUrl: "https://z-cdn-media.chatglm.cn/files/247c4b0c-d6e0-4487-b1c9-1c2dc52626fd.png?auth_key=1886231506-b70013a91c7548dc9dde642ed83cf8a5-0-7dd2e811a5e66217c231472ecbcaf950",
+                reading: `<p>Making Travel Arrangements. When making travel arrangements, use from... to... for routes, in for vehicles you can stand or walk inside (planes, trains), and on for specific days.</p>
+                <p>Always confirm flight times 24 hours before departure. When booking a hotel, check for corporate rates and confirm the check-in time. Arrange ground transportation from the airport to the hotel in advance.</p>
+                <p>Keep all confirmation numbers in one folder. For example: I am flying from Sydney to London on Monday in the first class cabin. I will arrive at the hotel in a taxi.</p>`,
+                readingAudioText: "Making Travel Arrangements. When making travel arrangements, use from... to... for routes, in for vehicles you can stand or walk inside (planes, trains), and on for specific days. Always confirm flight times 24 hours before departure. When booking a hotel, check for corporate rates and confirm the check-in time. Arrange ground transportation from the airport to the hotel in advance. Keep all confirmation numbers in one folder. For example: I am flying from Sydney to London on Monday in the first class cabin. I will arrive at the hotel in a taxi.",
+                vocabulary: [ 
+                    { term: "First class", phonetic: "/fɜːrst klæs/", def: "The most expensive and luxurious class of travel on an aircraft or train.", ex: "The CEO always flies first class for long-haul international flights." }, 
+                    { term: "Itinerary", phonetic: "/aɪˈtɪnərɛri/", def: "A planned route or journey, including dates, times, and locations.", ex: "I have attached your flight itinerary for the Sydney to London trip." } 
+                ], 
+                phrases: [ 
+                    { phrase: "I need to book a flight from Sydney to London.", context: "Stating travel requirements clearly." }, 
+                    { phrase: "Please find attached your itinerary.", context: "Notifying someone of their travel schedule document." } 
+                ], 
+                dialogue: [ 
+                    { speaker: "A", name: "Travel Agent", text: "Hello, how can I help you with your travel arrangements today?" }, 
+                    { speaker: "B", name: "Executive", text: "I need to book a flight from Sydney to London for next Monday." }, 
+                    { speaker: "A", name: "Travel Agent", text: "Certainly. Would you like to fly economy or first class?" }, 
+                    { speaker: "B", name: "Executive", text: "First class, please. I also need a hotel and a car rental." }, 
+                    { speaker: "A", name: "Travel Agent", text: "I can arrange that. I have booked the Park Hyatt at our corporate rate." }, 
+                    { speaker: "B", name: "Executive", text: "Perfect. And the car rental?" }, 
+                    { speaker: "A", name: "Travel Agent", text: "A luxury sedan will be waiting for you at the airport. Please find attached your itinerary." }, 
+                    { speaker: "B", name: "Executive", text: "Thank you. I will confirm my flight times 24 hours before departure." } 
+                ], 
+                grammarTip: { title: "Prepositions of Travel", explanation: "When making travel arrangements, use from... to... for routes, in for vehicles you can stand or walk inside (planes, trains), and on for specific days.", example: "I am flying from Sydney to London on Monday. I will be in the first class cabin." }, 
+                quiz: [ 
+                    { q: "According to the dialogue, where is the executive flying to?", opts: ["London to Sydney", "Sydney to London", "New York to Paris", "Tokyo to Seoul"], correct: 1, exp: "The executive states: I need to book a flight from Sydney to London." }, 
+                    { q: "What class of service does the executive request for the flight?", opts: ["Economy", "Business", "First class", "Premium economy"], correct: 2, exp: "When asked, the executive responds: First class, please." } 
+                ] 
+            },
+            // --- UNIT 15: TRAVEL NECESSITIES ---
+            "travel-necessities": { 
+                title: "Travel Necessities", 
+                description: "Prepare a travel checklist of essential documents, currency, and medicine for business trips.", 
+                level: "Intermediate", 
+                minutes: 25, 
+                imageUrl: "https://z-cdn-media.chatglm.cn/files/790e7936-aec0-401a-8035-126d1d51703d.png?auth_key=1886234969-b6ab43a252474dd9abbd4ba4476236be-0-f752993d79442e7e60207a30cdef27be",
+                reading: `<p>Travel Necessities. When discussing travel necessities, distinguish between countable nouns (passport, tickets, suitcases) and uncountable nouns (paperwork, currency, medicine, information). Uncountable nouns cannot be pluralized.</p>
+                <p>Always pack your passport, visa documents, and itinerary in your carry-on bag. Make copies of important paperwork in case your luggage is lost. Carry enough foreign currency for immediate expenses upon arrival.</p>
+                <p>Remember to pack any prescription medicine in its original packaging. Check the voltage requirements for your electronic devices and bring the appropriate adapters.</p>`,
+                readingAudioText: "Travel Necessities. When discussing travel necessities, distinguish between countable nouns (passport, tickets, suitcases) and uncountable nouns (paperwork, currency, medicine, information). Uncountable nouns cannot be pluralized. Always pack your passport, visa documents, and itinerary in your carry-on bag. Make copies of important paperwork in case your luggage is lost. Carry enough foreign currency for immediate expenses upon arrival. Remember to pack any prescription medicine in its original packaging. Check the voltage requirements for your electronic devices and bring the appropriate adapters.",
+                vocabulary: [ 
+                    { term: "Passport", phonetic: "/ˈpæspɔːrt/", def: "An official government document certifying identity and citizenship, required for international travel.", ex: "Do not forget your passport; you will not be allowed on the flight without it." }, 
+                    { term: "Foreign currency", phonetic: "/ˈfɒrɪn ˈkʌrənsi/", def: "The money used in a country other than one's own.", ex: "I need to exchange some dollars for foreign currency before I leave." } 
+                ], 
+                phrases: [ 
+                    { phrase: "Do not forget your passport.", context: "Reminding a traveler about a critical document." }, 
+                    { phrase: "Do you have any foreign currency?", context: "Asking if someone has local money for their destination." } 
+                ], 
+                dialogue: [ 
+                    { speaker: "A", name: "Assistant", text: "Before you leave for your trip to Tokyo, let's review your travel necessities." }, 
+                    { speaker: "B", name: "Executive", text: "Good idea. I have my passport and my flight tickets." }, 
+                    { speaker: "A", name: "Assistant", text: "Great. Do you have any foreign currency for your expenses abroad?" }, 
+                    { speaker: "B", name: "Executive", text: "Yes, I exchanged some dollars for Japanese Yen yesterday." }, 
+                    { speaker: "A", name: "Assistant", text: "Perfect. Did you pack your prescription medicine?" }, 
+                    { speaker: "B", name: "Executive", text: "Yes, it's in my carry-on bag, in the original packaging." }, 
+                    { speaker: "A", name: "Assistant", text: "Good. I also made copies of your visa paperwork in case your luggage is lost." }, 
+                    { speaker: "B", name: "Executive", text: "Excellent thinking. I believe I have all the travel necessities covered." } 
+                ], 
+                grammarTip: { title: "Countable vs. Uncountable Nouns in Packing", explanation: "When discussing travel necessities, distinguish between countable nouns (passport, tickets, suitcases) and uncountable nouns (paperwork, currency, medicine, information). Uncountable nouns cannot be pluralized.", example: "I need to pack my passport (countable) and some medicine (uncountable)." }, 
+                quiz: [ 
+                    { q: "According to the checklist, what is an essential travel document you must not forget?", opts: ["A magazine", "A passport", "A map", "A laptop"], correct: 1, exp: "The lesson emphasizes that a passport is an essential document required for international travel." }, 
+                    { q: "What uncountable noun refers to official documents, forms, or letters?", opts: ["Paperworks", "Passports", "Paperwork", "Currencies"], correct: 2, exp: "Paperwork is an uncountable noun and does not take an s." } 
+                ] 
+            }
+        };
+
+        const courseData = Object.keys(courseLessons).map((slug, index) => ({
+            id: index + 1, slug: slug, title: courseLessons[slug].title
+        }));
+
+        const savedState = JSON.parse(safeStorage.getItem("apex-english-state") || "{}");
+        const state = {
+            completedLessons: savedState.completedLessons || [],
+            bookmarks: savedState.bookmarks || [],
+            theme: savedState.theme || "light",
+            playbackRate: savedState.playbackRate || 1
+        };
+        function saveState() { safeStorage.setItem("apex-english-state", JSON.stringify(state)); }
+
+        const icons = {
+            checkCircle: `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>`,
+            bookmark: (fill) => `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="${fill}" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"/></svg>`,
+            volume: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>`,
+            flip: `<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/></svg>`,
+            back: `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>`,
+            play: `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="6 3 20 12 6 21 6 3"/></svg>`,
+            lightbulb: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>`,
+            check: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`,
+            x: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>`,
+            book: `<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg>`
+        };
+
+        function applyTheme() { state.theme === "dark" ? document.documentElement.classList.add("dark") : document.documentElement.classList.remove("dark"); }
+        function toggleTheme() { state.theme = state.theme === "dark" ? "light" : "dark"; saveState(); applyTheme(); }
+        document.getElementById("theme-toggle").addEventListener("click", toggleTheme);
+        document.getElementById("theme-toggle-mobile").addEventListener("click", toggleTheme);
+        applyTheme();
+
+        function switchView(viewName) {
+            document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+            document.getElementById(`${viewName}-view`).classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function renderDashboard() {
+            const completed = state.completedLessons.length;
+            const completionRate = Math.round((completed / courseData.length) * 100);
+            document.getElementById("completed-count").textContent = `${completed} / ${courseData.length}`;
+            document.getElementById("completion-rate").textContent = `${completionRate}%`;
+            document.getElementById("bookmark-count").textContent = `${state.bookmarks.length} Items`;
+            const map = document.getElementById('course-map');
+            map.innerHTML = courseData.map(unit => {
+                const isCompleted = state.completedLessons.includes(unit.slug);
+                return `
+                    <div class="flex items-center justify-between border-b border-gray-100 dark:border-navy/50 pb-4 last:border-0">
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 rounded-full bg-softgray dark:bg-charcoal flex items-center justify-center text-gold">
+                                ${unitIcons[unit.slug] || ''}
+                            </div>
+                            <div>
+                                <span class="text-xs text-gold font-semibold">UNIT ${unit.id}</span>
+                                <h3 class="font-bold text-navy dark:text-ivory">${unit.title}</h3>
+                            </div>
+                        </div>
+                        ${isCompleted ? `<span class="text-sm text-gold flex items-center gap-2 font-medium">${icons.checkCircle} Completed</span>` : `<button data-open-lesson="${unit.slug}" class="text-sm text-navy/50 dark:text-ivory/50 hover:text-gold font-medium">Continue &rarr;</button>`}
+                    </div>`;
+            }).join('');
+        }
+
+        let activeLessonSlug = null;
+        let currentQuestion = 0;
+        let score = 0;
+
+        function openLesson(slug) {
+            const unit = courseLessons[slug];
+            if (!unit) return;
+            activeLessonSlug = slug;
+            currentQuestion = 0;
+            score = 0;
+            switchView("lesson");
+            renderLesson(unit);
+        }
+
+        function renderLesson(unit) {
+            const content = document.getElementById('lesson-content');
+            // The reading variable now contains pre-formatted HTML
+            const readingHtml = unit.reading || '';
+
+            let html = `
+                <button data-nav="dashboard" class="flex items-center gap-2 text-sm font-medium text-navy/60 dark:text-ivory/60 hover:text-gold mb-8 transition-colors">${icons.back} Back to Course Map</button>
+                
+                <header class="border-b border-gray-200 dark:border-navy-light pb-8 mb-12 flex flex-col md:flex-row md:items-center gap-6">
+                    <div class="w-20 h-20 rounded-full bg-softgray dark:bg-charcoal flex items-center justify-center text-gold border-4 border-white dark:border-navy shadow-premium flex-shrink-0">
+                        ${unitIcons[unit.slug] || ''}
+                    </div>
+                    <div class="flex-1">
+                        <span class="text-gold font-semibold uppercase tracking-wider text-sm">${unit.level}</span>
+                        <h1 class="font-serif text-4xl md:text-5xl font-bold mt-2 mb-4 text-navy dark:text-ivory">${unit.title}</h1>
+                        <p class="text-navy/60 dark:text-ivory/60 text-lg">${unit.description}</p>
+                    </div>
+                    <div class="w-full bg-gray-200 dark:bg-navy-light rounded-full h-2.5"><div class="bg-gold h-2.5 rounded-full transition-all duration-500" style="width: ${state.completedLessons.includes(activeLessonSlug) ? 100 : 0}%"></div></div>
+                </header>
+
+                ${unit.imageUrl ? `
+                <div class="mb-16">
+                    <div class="bg-white dark:bg-navy-light rounded-2xl shadow-premium p-2 border border-gray-100 dark:border-navy/50 overflow-hidden">
+                        <img src="${unit.imageUrl}" alt="${unit.title} Illustration" class="w-full h-auto object-cover rounded-xl max-h-96">
+                    </div>
+                </div>` : ''}
+
+                <section class="mb-16">
+                    <h2 class="font-serif text-3xl font-bold mb-8 text-navy dark:text-ivory">Textbook Reading</h2>
+                    <div class="bg-white dark:bg-navy-light rounded-2xl shadow-premium p-8 border border-gray-100 dark:border-navy/50">
+                        <div class="flex justify-end mb-4"><button data-audio="${unit.readingAudioText}" data-speaker="A" aria-label="Play reading audio" class="audio-btn p-2 rounded-full text-navy/50 dark:text-ivory/50 hover:text-gold">${icons.volume}</button></div>
+                        <div class="text-navy/80 dark:text-ivory/80 leading-relaxed text-lg">${readingHtml}</div>
+                    </div>
+                </section>
+
+                <section class="mb-16">
+                    <h2 class="font-serif text-3xl font-bold mb-8 text-navy dark:text-ivory">Vocabulary</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        ${unit.vocabulary.map((v, i) => `
+                            <div class="perspective-1000 h-64 cursor-pointer" data-flip="card-${i}" tabindex="0" role="button" aria-label="Flip vocabulary card for ${v.term}">
+                                <div class="relative w-full h-full preserve-3d" id="card-${i}">
+                                    <div class="absolute w-full h-full backface-hidden bg-white dark:bg-navy-light rounded-2xl shadow-premium p-6 flex flex-col justify-between border border-gray-100 dark:border-navy/50">
+                                        <div class="flex justify-between items-start">
+                                            <span class="text-xs font-semibold text-gold uppercase tracking-wider">Vocabulary</span>
+                                            <button data-bookmark="vocab-${i}" aria-label="Bookmark ${v.term}" class="bookmark-btn p-1 ${state.bookmarks.includes(`vocab-${i}`) ? 'text-gold' : 'text-navy/40 dark:text-ivory/40 hover:text-gold'}">${icons.bookmark(state.bookmarks.includes(`vocab-${i}`) ? 'currentColor' : 'none')}</button>
+                                        </div>
+                                        <div class="text-center"><h3 class="font-serif text-3xl font-bold mb-2 text-navy dark:text-ivory">${v.term}</h3><p class="text-navy/50 dark:text-ivory/50 text-sm">${v.phonetic}</p></div>
+                                        <div class="flex justify-between items-center"><button data-audio="${v.term}" data-speaker="A" aria-label="Play pronunciation for ${v.term}" class="audio-btn p-2 rounded-full text-navy/50 dark:text-ivory/50 hover:text-gold">${icons.volume}</button><span class="text-xs text-navy/40 dark:text-ivory/40 flex items-center gap-1">Flip ${icons.flip}</span></div>
+                                    </div>
+                                    <div class="absolute w-full h-full backface-hidden rotate-y-180 bg-navy text-ivory rounded-2xl shadow-premium p-6 flex flex-col justify-between">
+                                        <div class="flex justify-between items-start"><span class="text-xs font-semibold text-gold uppercase tracking-wider">Definition</span><button data-audio="${v.def}" data-speaker="A" aria-label="Play definition audio" class="audio-btn p-1 text-ivory/70 hover:text-gold">${icons.volume}</button></div>
+                                        <div><p class="text-sm mb-4">${v.def}</p><p class="text-xs italic text-ivory/70 border-l-2 border-gold pl-3">"${v.ex}"</p></div>
+                                        <div class="text-right"><span class="text-xs text-ivory/50 flex items-center gap-1 justify-end">Flip ${icons.flip}</span></div>
+                                    </div>
+                                </div>
+                            </div>`).join('')}
+                    </div>
+                </section>
+
+                <section class="mb-16">
+                    <h2 class="font-serif text-3xl font-bold mb-8 text-navy dark:text-ivory">Phrase Bank</h2>
+                    <div class="bg-white dark:bg-navy-light rounded-2xl shadow-premium border border-gray-100 dark:border-navy/50 divide-y divide-gray-100 dark:divide-navy/50">
+                        ${unit.phrases.map((p, i) => `
+                            <div class="p-6 flex items-center gap-4 hover:bg-gray-50 dark:hover:bg-navy/30 transition-colors">
+                                <button data-audio="${p.phrase}" data-speaker="A" aria-label="Play phrase audio" class="audio-btn p-2 rounded-full text-navy/50 dark:text-ivory/50 hover:text-gold">${icons.volume}</button>
+                                <div class="flex-1"><p class="font-bold text-navy dark:text-ivory">${p.phrase}</p><p class="text-sm text-navy/60 dark:text-ivory/60 mt-1">${p.context}</p></div>
+                                <button data-bookmark="phrase-${i}" aria-label="Bookmark phrase" class="bookmark-btn p-2 rounded-full ${state.bookmarks.includes(`phrase-${i}`) ? 'text-gold' : 'text-navy/40 dark:text-ivory/40 hover:text-gold'}">${icons.bookmark(state.bookmarks.includes(`phrase-${i}`) ? 'currentColor' : 'none')}</button>
+                            </div>`).join('')}
+                    </div>
+                </section>
+
+                <section class="mb-16">
+                    <h2 class="font-serif text-3xl font-bold mb-8 text-navy dark:text-ivory">Dialogue</h2>
+                    <div class="bg-white dark:bg-navy-light rounded-2xl shadow-premium border border-gray-100 dark:border-navy/50 p-6">
+                        <div class="flex justify-between items-center mb-6 pb-4 border-b border-gray-100 dark:divide-navy/50">
+                            <button id="play-dialogue-btn" class="flex items-center gap-2 px-4 py-2 bg-navy text-ivory rounded-full text-sm font-semibold hover:bg-navy-dark transition-colors">${icons.play} <span id="dialogue-btn-text">Listen to all</span></button>
+                            <div class="flex items-center gap-2">
+                                ${[0.75, 1, 1.25].map(s => `<button data-speed="${s}" class="speed-btn px-2 py-1 text-xs rounded-md ${state.playbackRate == s ? 'bg-gold text-navy' : 'bg-gray-100 dark:bg-navy text-navy/50 dark:text-ivory/50'}">${s}x</button>`).join('')}
+                            </div>
+                        </div>
+                        <div class="space-y-4">
+                            ${unit.dialogue.map((line, i) => `
+                                <div id="line-${i}" class="flex gap-3 items-end ${line.speaker === 'B' ? 'justify-end flex-row-reverse' : ''}">
+                                    <div class="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 ${line.speaker === 'A' ? 'bg-gray-200 dark:bg-charcoal text-navy dark:text-ivory' : 'bg-gold text-navy'}">${line.name.charAt(0)}</div>
+                                    <div class="max-w-[75%] p-4 rounded-2xl ${line.speaker === 'A' ? 'bg-gray-100 dark:bg-charcoal text-navy dark:text-ivory rounded-bl-none' : 'bg-navy dark:bg-gold dark:text-navy text-ivory rounded-br-none'}">
+                                        <p class="text-sm">${line.text}</p>
+                                        <div class="mt-2 ${line.speaker === 'B' ? 'flex justify-end' : ''}"><button data-audio="${line.text}" data-speaker="${line.speaker}" aria-label="Play line audio" class="audio-btn p-1 ${line.speaker === 'A' ? 'text-navy/40 dark:text-ivory/40 hover:text-gold' : 'text-ivory/40 dark:text-navy/40 hover:text-gold'}">${icons.volume}</button></div>
+                                    </div>
+                                </div>`).join('')}
+                        </div>
+                    </div>
+                </section>
+
+                <section class="mb-16">
+                    <h2 class="font-serif text-3xl font-bold mb-8 text-navy dark:text-ivory">Grammar Note</h2>
+                    <div class="bg-softgray dark:bg-charcoal rounded-2xl p-8 border-l-4 border-gold">
+                        <div class="flex items-center gap-3 mb-4"><span class="text-gold">${icons.lightbulb}</span><h3 class="font-serif text-xl font-bold text-navy dark:text-ivory">Pro Tip: <span class="text-gold">${unit.grammarTip.title}</span></h3></div>
+                        <p class="text-navy/80 dark:text-ivory/80 mb-4">${unit.grammarTip.explanation}</p>
+                        <div class="bg-white dark:bg-navy-light p-4 rounded-lg border border-gray-200 dark:border-navy/50"><p class="text-sm italic text-navy dark:text-ivory"><span class="font-semibold not-italic text-gold">Example: </span>${unit.grammarTip.example}</p></div>
+                    </div>
+                </section>
+
+                <section class="mb-16">
+                    <h2 class="font-serif text-3xl font-bold mb-8 text-navy dark:text-ivory">Interactive Quiz</h2>
+                    <div class="bg-white dark:bg-navy-light rounded-2xl shadow-premium p-8 border border-gray-100 dark:border-navy/50" id="quiz-container"></div>
+                </section>`;
+            
+            content.innerHTML = html;
+            renderQuiz();
+        }
+
+        function renderQuiz() {
+            const container = document.getElementById('quiz-container');
+            const unit = courseLessons[activeLessonSlug];
+            const q = unit.quiz[currentQuestion];
+            container.innerHTML = `
+                <div class="flex justify-between items-center mb-6"><span class="text-sm font-semibold text-navy/50 dark:text-ivory/50">Question ${currentQuestion + 1} of ${unit.quiz.length}</span><div class="w-1/2 bg-gray-200 dark:bg-navy rounded-full h-1.5"><div class="bg-gold h-1.5 rounded-full transition-all duration-300" style="width: ${((currentQuestion + 1) / unit.quiz.length) * 100}%"></div></div></div>
+                <h3 class="font-serif text-2xl font-bold mb-8 text-navy dark:text-ivory">${q.q}</h3>
+                <div class="space-y-3 mb-8" id="quiz-options">${q.opts.map((opt, i) => `<button data-quiz-option="${i}" class="quiz-option w-full text-left p-4 rounded-xl border border-gray-200 dark:border-navy/50 text-navy dark:text-ivory hover:border-gold hover:bg-gray-50 dark:hover:bg-navy/30 transition-all duration-200 flex items-center justify-between"><span>${opt}</span></button>`).join('')}</div>
+                <div id="quiz-feedback" class="hidden p-4 rounded-xl border-l-4 mb-6" role="status" aria-live="assertive"><p class="font-bold mb-1 text-navy dark:text-ivory" id="feedback-title"></p><p class="text-sm text-navy/70 dark:text-ivory/70" id="feedback-text"></p></div>
+                <button id="next-btn" class="hidden w-full py-3 bg-navy text-ivory dark:bg-gold dark:text-navy rounded-full font-semibold hover:opacity-90 transition-opacity">${currentQuestion < unit.quiz.length - 1 ? 'Next Question' : 'Finish Quiz'}</button>`;
+        }
+
+        function selectQuizOption(index) {
+            if (currentAudio !== null) return;
+            const unit = courseLessons[activeLessonSlug];
+            const q = unit.quiz[currentQuestion];
+            const options = document.querySelectorAll('.quiz-option');
+            const feedback = document.getElementById('quiz-feedback');
+            const feedbackTitle = document.getElementById('feedback-title');
+            const feedbackText = document.getElementById('feedback-text');
+            const nextBtn = document.getElementById('next-btn');
+            options.forEach(o => o.style.pointerEvents = 'none');
+            if (index === q.correct) {
+                options[index].classList.add('border-gold', 'bg-gold/10');
+                options[index].innerHTML += `<span class="text-gold">${icons.check}</span>`;
+                feedback.classList.add('bg-gold/10', 'border-gold');
+                feedbackTitle.innerText = "Correct!"; feedbackTitle.classList.add('text-gold'); score++;
+            } else {
+                options[index].classList.add('border-red-500', 'bg-red-50', 'dark:bg-red-900/20');
+                options[index].innerHTML += `<span class="text-red-500">${icons.x}</span>`;
+                options[q.correct].classList.add('border-gold', 'bg-gold/10');
+                options[q.correct].innerHTML += `<span class="text-gold">${icons.check}</span>`;
+                feedback.classList.add('bg-red-50', 'dark:bg-red-900/20', 'border-red-500');
+                feedbackTitle.innerText = "Incorrect."; feedbackTitle.classList.add('text-red-500');
+            }
+            feedbackText.innerText = q.exp; feedback.classList.remove('hidden'); nextBtn.classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            const unit = courseLessons[activeLessonSlug];
+            if (currentQuestion < unit.quiz.length - 1) {
+                currentQuestion++; renderQuiz();
+            } else {
+                const container = document.getElementById('quiz-container');
+                const percentage = Math.round((score / unit.quiz.length) * 100);
+                const passed = percentage >= 70;
+                if (passed) { if (!state.completedLessons.includes(activeLessonSlug)) { state.completedLessons.push(activeLessonSlug); saveState(); } }
+                container.innerHTML = `<div class="text-center p-12"><div class="w-20 h-20 mx-auto mb-6 rounded-full flex items-center justify-center bg-gold/10"><span class="${passed ? 'text-gold' : 'text-red-500'}">${passed ? icons.checkCircle : icons.x}</span></div><h3 class="font-serif text-3xl font-bold mb-2 text-navy dark:text-ivory">${passed ? 'Lesson Complete!' : 'Almost there!'}</h3><p class="text-navy/60 dark:text-ivory/60 mb-8">You scored ${score} out of ${unit.quiz.length} (${percentage}%)</p><p class="text-sm text-navy/50 dark:text-ivory/50 mb-8">${passed ? 'Your progress has been saved.' : 'You need a score of 70% or higher to complete this lesson.'}</p><div class="flex flex-col md:flex-row gap-4 justify-center"><button data-nav="dashboard" class="px-6 py-3 bg-navy text-ivory dark:bg-charcoal dark:text-ivory rounded-full font-semibold hover:opacity-90 transition-opacity">Back to Dashboard</button>${!passed ? `<button id="retry-btn" class="px-6 py-3 bg-gold text-navy rounded-full font-semibold hover:bg-gold-dark transition-colors">Try Again</button>` : ''}</div></div>`;
+                if (passed) renderDashboard();
+                if (!passed) { document.getElementById('retry-btn').addEventListener('click', () => { currentQuestion = 0; score = 0; renderQuiz(); }); }
+            }
+        }
+
+        // --- AUDIO CONTROLLER (Male & Female Voices) ---
+        let voices = [];
+        let femaleVoice = null;
+        let maleVoice = null;
+
+        function loadVoices() {
+            voices = window.speechSynthesis.getVoices();
+            const femaleNames = ["Google US English", "Samantha", "Microsoft Aria Online (Natural) - English (United States)", "Microsoft Zira - English (United States)"];
+            const maleNames = ["Google UK English Male", "Daniel", "Microsoft Guy Online (Natural) - English (United States)", "Microsoft David - English (United States)"];
+            
+            for (const name of femaleNames) { const v = voices.find(v => v.name === name); if (v) { femaleVoice = v; break; } }
+            for (const name of maleNames) { const v = voices.find(v => v.name === name); if (v) { maleVoice = v; break; } }
+            
+            if (!femaleVoice) femaleVoice = voices.find(v => v.lang === 'en-US');
+            if (!maleVoice) maleVoice = voices.find(v => v.lang === 'en-GB' && v.name.toLowerCase().includes('male')) || voices.find(v => v.lang === 'en-GB') || voices.find(v => v.lang === 'en-US' && v.name.toLowerCase().includes('male'));
+        }
+
+        if ('speechSynthesis' in window) {
+            loadVoices();
+            window.speechSynthesis.onvoiceschanged = loadVoices;
+        }
+
+        let currentAudio = null;
+        function playAudio(text, btnElement, speaker = 'A') {
+            if (window.speechSynthesis) window.speechSynthesis.cancel();
+            if (currentAudio) currentAudio.classList.remove('audio-playing');
+            if (currentAudio === btnElement) { currentAudio = null; return; }
+            
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(text);
+                const voice = speaker === 'A' ? femaleVoice : maleVoice;
+                if (voice) utterance.voice = voice;
+                utterance.rate = state.playbackRate;
+                utterance.pitch = 1.0;
+                if (btnElement) { btnElement.classList.add('audio-playing'); currentAudio = btnElement; }
+                utterance.onend = () => { if (btnElement) btnElement.classList.remove('audio-playing'); currentAudio = null; };
+                window.speechSynthesis.speak(utterance);
+            }
+        }
+
+        let isPlayingDialogue = false;
+        let dialogueRunId = 0;
+        async function playDialogue() {
+            const runId = ++dialogueRunId;
+            const btnText = document.getElementById('dialogue-btn-text');
+            const unit = courseLessons[activeLessonSlug];
+            if (isPlayingDialogue) { isPlayingDialogue = false; window.speechSynthesis.cancel(); btnText.innerText = "Listen to all"; return; }
+            isPlayingDialogue = true; btnText.innerText = "Stop";
+            for (let i = 0; i < unit.dialogue.length; i++) {
+                if (!isPlayingDialogue || runId !== dialogueRunId) break;
+                const lineElement = document.getElementById(`line-${i}`);
+                if (lineElement) lineElement.classList.add('ring-2', 'ring-gold');
+                await new Promise(resolve => {
+                    const utterance = new SpeechSynthesisUtterance(unit.dialogue[i].text);
+                    const v = unit.dialogue[i].speaker === 'A' ? femaleVoice : maleVoice;
+                    if (v) utterance.voice = v;
+                    utterance.rate = state.playbackRate;
+                    utterance.onend = resolve;
+                    utterance.onerror = resolve;
+                    window.speechSynthesis.speak(utterance);
+                });
+                if (lineElement) lineElement.classList.remove('ring-2', 'ring-gold');
+            }
+            isPlayingDialogue = false; btnText.innerText = "Listen to all";
+        }
+
+        function flipCard(cardId) { const card = document.getElementById(cardId); if (card) card.classList.toggle('rotate-y-180'); }
+        function toggleBookmark(event, button) {
+            event.stopPropagation();
+            const id = button.dataset.bookmark;
+            if (!id) return;
+            const index = state.bookmarks.indexOf(id);
+            if (index >= 0) { state.bookmarks.splice(index, 1); button.classList.remove('text-gold'); button.classList.add('text-navy/40', 'dark:text-ivory/40'); button.innerHTML = icons.bookmark('none'); }
+            else { state.bookmarks.push(id); button.classList.add('text-gold'); button.classList.remove('text-navy/40', 'dark:text-ivory/40'); button.innerHTML = icons.bookmark('currentColor'); }
+            saveState(); renderDashboard();
+        }
+
+        const glossaryData = Object.values(courseLessons).flatMap((lesson) => lesson.vocabulary.map((item) => ({ ...item, unit: lesson.title }))).sort((a, b) => a.term.localeCompare(b.term));
+
+        function renderGlossary(items) {
+            const listContainer = document.getElementById('glossary-list');
+            listContainer.innerHTML = '';
+            if (items.length === 0) { listContainer.innerHTML = '<p class="text-center text-navy/50 dark:text-ivory/50 font-serif text-2xl py-12">No terms found.</p>'; return; }
+            const grouped = items.reduce((acc, item) => { const letter = item.term[0].toUpperCase(); if (!acc[letter]) acc[letter] = []; acc[letter].push(item); return acc; }, {});
+            Object.keys(grouped).sort().forEach(letter => {
+                const groupHtml = `<div><h2 class="font-serif text-3xl font-bold text-gold mb-4 border-b border-gold/20 pb-2">${letter}</h2><div class="bg-white dark:bg-navy-light rounded-2xl shadow-premium border border-gray-100 dark:border-navy/50 divide-y divide-gray-100 dark:divide-navy/50">${grouped[letter].map(item => `<div class="p-6 flex flex-col md:flex-row md:items-start gap-4 hover:bg-gray-50 dark:hover:bg-navy/30 transition-colors"><div class="md:w-1/4"><h3 class="font-serif text-xl font-bold text-navy dark:text-ivory">${item.term}</h3></div><div class="md:w-3/4"><p class="text-navy/80 dark:text-ivory/80 mb-2">${item.def}</p><span class="inline-flex items-center gap-1.5 text-xs font-medium text-navy/50 dark:text-ivory/50 bg-softgray dark:bg-charcoal px-2 py-1 rounded-md">${icons.book} ${item.unit}</span></div></div>`).join('')}</div></div>`;
+                listContainer.innerHTML += groupHtml;
+            });
+        }
+        function filterGlossary() {
+            const query = document.getElementById('glossary-search').value.toLowerCase();
+            const filtered = glossaryData.filter(item => item.term.toLowerCase().includes(query) || item.def.toLowerCase().includes(query));
+            renderGlossary(filtered);
+        }
+
+        // --- GLOBAL EVENT DELEGATION ---
+        document.body.addEventListener('click', (event) => {
+            // 1. Navigation
+            const navBtn = event.target.closest('[data-nav]');
+            if (navBtn) { switchView(navBtn.dataset.nav); return; }
+
+            // 2. Audio
+            const audioBtn = event.target.closest('[data-audio]');
+            if (audioBtn) { playAudio(audioBtn.dataset.audio, audioBtn, audioBtn.dataset.speaker || 'A'); return; }
+
+            // 3. Bookmarks
+            const bookmarkBtn = event.target.closest('[data-bookmark]');
+            if (bookmarkBtn) { toggleBookmark(event, bookmarkBtn); return; }
+
+            // 4. Flashcards
+            const flipCardBtn = event.target.closest('[data-flip]');
+            if (flipCardBtn) { flipCard(flipCardBtn.dataset.flip); return; }
+
+            // 5. Lesson Selection
+            const openLessonBtn = event.target.closest('[data-open-lesson]');
+            if (openLessonBtn) { openLesson(openLessonBtn.dataset.openLesson); return; }
+
+            // 6. Quiz Options
+            const quizOptionBtn = event.target.closest('[data-quiz-option]');
+            if (quizOptionBtn) { selectQuizOption(parseInt(quizOptionBtn.dataset.quizOption)); return; }
+
+            // 7. Next Question / Finish Quiz
+            const nextBtn = event.target.closest('#next-btn');
+            if (nextBtn) { nextQuestion(); return; }
+
+            // 8. Audio Speed
+            const speedBtn = event.target.closest('[data-speed]');
+            if (speedBtn) {
+                state.playbackRate = parseFloat(speedBtn.dataset.speed);
+                saveState();
+                document.querySelectorAll('.speed-btn').forEach(btn => {
+                    if (parseFloat(btn.dataset.speed) === state.playbackRate) { btn.classList.add('bg-gold', 'text-navy'); btn.classList.remove('bg-gray-100', 'dark:bg-navy', 'text-navy/50', 'dark:text-ivory/50'); }
+                    else { btn.classList.remove('bg-gold', 'text-navy'); btn.classList.add('bg-gray-100', 'dark:bg-navy', 'text-navy/50', 'dark:text-ivory/50'); }
+                });
+                return;
+            }
+
+            // 9. Play Dialogue
+            const playDialogueBtn = event.target.closest('#play-dialogue-btn');
+            if (playDialogueBtn) { playDialogue(); return; }
+        });
+
+        document.body.addEventListener('keydown', (event) => {
+            if ((event.key === 'Enter' || event.key === ' ') && event.target.matches('[data-flip]')) { event.preventDefault(); flipCard(event.target.dataset.flip); }
+        });
+
+        document.getElementById('glossary-search').addEventListener('keyup', filterGlossary);
+
+        // --- INIT ---
+        renderDashboard();
+        renderGlossary(glossaryData);
+    });
+    </script>
+</body>
+</html>
